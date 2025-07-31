@@ -1,0 +1,94 @@
+.stepper {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.stepper__item {
+    position: relative;
+    width: 404px;
+    height: 56px;
+    flex: 1;
+    padding: 20px 20px 20px 40px;
+    margin: 0;
+    clip-path: polygon(20px 50%,
+            0% 0%,
+            calc(100% - 20px) 0%,
+            100% 50%,
+            calc(100% - 20px) 100%,
+            0% 100%);
+    background: #fff;
+    border: 1px solid rgb(99, 99, 97);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-color: rgb(0, 123, 255);
+}
+
+.stepper__item.current {
+    background: #fff;
+    font-weight: bold;
+    border-color: rgb(0, 123, 255);
+}
+
+.stepper__item.complete {
+    background: rgb(220, 224, 226);
+}
+
+.stepper__item:first-child {
+    clip-path: polygon(0% 0%,
+            calc(100% - 20px) 0%,
+            100% 50%,
+            calc(100% - 20px) 100%,
+            0% 100%);
+}
+
+.stepper__item:last-child {
+    clip-path: polygon(20px 50%, 0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+/* Add spacing between steps */
+.stepper__item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -1px;
+    width: 1px;
+    height: 100%;
+    background: rgb(99, 99, 97);
+}
+
+
+/* .stepper {
+      display: flex;
+      list-style: none;
+    }
+  
+    .stepper__item {
+      flex: 100%;
+      padding: 20px 20px 20px 40px;
+      margin: 0 0 0 -19px;
+      
+      -webkit-clip-path: polygon(20px 50%, 0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+      
+      &.current {
+        background: #fff;
+        font-weight: bold;
+        border: 1px solid rgb(99, 99, 97);
+      }
+      
+      &.complete {
+        background: rgb(106, 187, 219);
+        border: 1px solid rgb(99, 99, 97);
+      }
+      
+      &:first-child {
+        padding: 20px;
+        -webkit-clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+      }
+      
+      &:last-child {
+        -webkit-clip-path: polygon(20px 50%, 0% 0%, 100% 0%, 100% 100%, 0% 100%);
+      }
+    }  */

@@ -1,0 +1,103 @@
+.slick-slider {
+  position: relative;
+}
+
+.slick-track {
+  display: flex !important;
+  align-items: stretch;
+}
+
+.slick-slide {
+  height: auto;
+}
+
+.slick-slide > div {
+  height: 100%;
+}
+
+/* Custom styled dots */
+.slick-dots.custom-dots {
+  bottom: -60px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative !important;
+}
+
+.slick-dots.custom-dots li {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-block !important;
+}
+
+.slick-dots.custom-dots li button {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  background: #d1d5db !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 4px !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  outline: none !important;
+}
+
+.slick-dots.custom-dots li.slick-active button {
+  background: #892580 !important;
+  transform: scale(1.25) !important;
+  box-shadow: 0 2px 8px rgba(137, 37, 128, 0.3) !important;
+}
+
+.slick-dots.custom-dots li button:hover {
+  background: rgba(137, 37, 128, 0.5) !important;
+  transform: scale(1.1) !important;
+}
+
+.slick-dots.custom-dots li button:before {
+  display: none !important;
+}
+
+.slick-arrow {
+  z-index: 10 !important;
+}
+
+.slick-arrow:hover {
+  background: white !important;
+}
+
+.slick-arrow:before {
+  display: none !important;
+}
+
+/* Hide arrows on mobile */
+@media (max-width: 768px) {
+  .slick-arrow {
+    display: none !important;
+  }
+}
+
+/* Smooth infinite scroll */
+.slick-list {
+  overflow: hidden;
+}
+
+.slick-track {
+  transition: transform 0.5s ease !important;
+}
+
+/* Mobile dots styling */
+@media (max-width: 768px) {
+  .slick-dots.custom-dots {
+    bottom: -50px !important;
+  }
+
+  .slick-dots.custom-dots li button {
+    width: 10px !important;
+    height: 10px !important;
+  }
+}
