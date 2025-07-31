@@ -2,7 +2,7 @@
 
 import { fetchEventCategories } from "@/services/Home/home.service";
 import { useQuery } from "@tanstack/react-query";
-import { Calendar, Camera, MapPin, Search } from "lucide-react";
+import { Calendar, Camera, MapPin, Search, Palette, Target } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
@@ -52,21 +52,21 @@ const HomeSearch = () => {
     <div className="max-w-4xl mx-auto mb-12">
       <div className="bg-gradient-to-br from-white via-gray-50 to-white backdrop-blur-sm rounded-3xl p-4 shadow-2xl border border-white/50 relative overflow-hidden">
         {/* Subtle background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#892580]/5 via-transparent to-[#892580]/5 rounded-3xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/5 via-transparent to-[#0284C7]/5 rounded-3xl"></div>
         
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
           
           {/* Activity Selection */}
           <div className="group">
-            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2 group-hover:text-[#892580] transition-colors duration-200">
-              <div className="p-2 bg-gradient-to-br from-[#892580]/20 to-[#892580]/10 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-200">
-                <Camera className="w-4 h-4 text-[#892580]" />
+            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2 group-hover:text-[#2563EB] transition-colors duration-200">
+              <div className="p-2 bg-gradient-to-br from-[#2563EB]/20 to-[#0284C7]/10 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-200">
+                <Palette className="w-4 h-4 text-[#2563EB]" />
               </div>
               Activity
             </label>
             <div className="relative">
               <select
-                className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-2xl text-gray-700 font-medium focus:outline-none focus:ring-4 focus:ring-[#892580]/25 focus:border-[#892580] transition-all duration-300 hover:border-gray-300 hover:shadow-lg appearance-none cursor-pointer"
+                className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-2xl text-gray-700 font-medium focus:outline-none focus:ring-4 focus:ring-[#2563EB]/25 focus:border-[#2563EB] transition-all duration-300 hover:border-gray-300 hover:shadow-lg appearance-none cursor-pointer"
                 value={selectedTypeId||"null"}
                 onChange={handleTypeChange}
               >
@@ -87,9 +87,9 @@ const HomeSearch = () => {
 
           {/* Location */}
           <div className="group">
-            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2 group-hover:text-[#892580] transition-colors duration-200">
-              <div className="p-2 bg-gradient-to-br from-[#892580]/20 to-[#892580]/10 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-200">
-                <MapPin className="w-4 h-4 text-[#892580]" />
+            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2 group-hover:text-[#0284C7] transition-colors duration-200">
+              <div className="p-2 bg-gradient-to-br from-[#0284C7]/20 to-[#2563EB]/10 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-200">
+                <Target className="w-4 h-4 text-[#0284C7]" />
               </div>
               Location
             </label>
@@ -99,7 +99,7 @@ const HomeSearch = () => {
               onCoordinates={handleCoordinates}
               placeholder="Search for a city"
               debounceTime={300}
-              className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-2xl text-gray-700 font-medium focus:outline-none focus:ring-4 focus:ring-[#892580]/25 focus:border-[#892580] transition-all duration-300 hover:border-gray-300 hover:shadow-lg"
+              className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-2xl text-gray-700 font-medium focus:outline-none focus:ring-4 focus:ring-[#0284C7]/25 focus:border-[#0284C7] transition-all duration-300 hover:border-gray-300 hover:shadow-lg"
             />
           </div>
 
@@ -108,7 +108,7 @@ const HomeSearch = () => {
             <button
               onClick={handleSearch}
               disabled={isLoading}
-              className="group relative w-full h-12 bg-gradient-to-r from-[#892580] via-[#9d2b91] to-[#b84397] text-white font-bold rounded-2xl hover:from-[#7a2073] hover:via-[#8a257f] hover:to-[#a63d88] focus:outline-none focus:ring-4 focus:ring-[#892580]/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] active:scale-[0.98] overflow-hidden"
+              className="group relative w-full h-12 bg-gradient-to-r from-[#2563EB] via-[#0284C7] to-[#EC4899] text-white font-bold rounded-2xl hover:from-[#1D4ED8] hover:via-[#0369A1] hover:to-[#DB2777] focus:outline-none focus:ring-4 focus:ring-[#2563EB]/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] active:scale-[0.98] overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               {isLoading ? (

@@ -38,8 +38,8 @@ module.exports = {
           950: '#500724',
         },
 
-        'brand-primary': '#892580',
-        'brand-secondary': '#A855F7',
+        'brand-primary': '#2563EB',
+        'brand-secondary': '#0284C7',
         'brand-accent': '#EC4899', 
       },
     },
