@@ -51,7 +51,7 @@ export const getStudioById = async (id) => {
 }
 export const  getStudioCategories = async () => {
   try {
-    const response = await axiosInstance(`/user/studio/categories`);
+    const response = await axiosInstance(`/admin/studio-category/`);
     return response.data;
   } catch (error) {
     throw new Error('Error fetching studio details');
