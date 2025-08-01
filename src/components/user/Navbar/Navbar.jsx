@@ -199,9 +199,9 @@ const Navbar = () => {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-[#2563EB] rounded flex items-center justify-center">
+                  {/* <div className="w-8 h-8 bg-[#2563EB] rounded flex items-center justify-center">
                     <Camera className="w-5 h-5 text-white" />
-                  </div>
+                  </div> */}
                   <div className="hidden sm:block">
                     <h1 className="text-xl font-bold text-gray-900">SKL</h1>
                     <p className="text-xs text-gray-600 -mt-1">Photography</p>
