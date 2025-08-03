@@ -37,7 +37,7 @@ const testimonialsData = [
   },
   {
     rating: 5,
-    text: "The wedding photography session at Aloka was magical! The studio's ambiance and professional lighting created the perfect romantic atmosphere. Highly recommend for special occasions.",
+    text: "The wedding photography session at SKL was magical! The studio's ambiance and professional lighting created the perfect romantic atmosphere. Highly recommend for special occasions.",
     name: "Emma Thompson",
     company: "Wedding Planner, Blissful Events",
     image: "https://randomuser.me/api/portraits/women/55.jpg",

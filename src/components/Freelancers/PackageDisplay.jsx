@@ -216,7 +216,7 @@ const PackageDisplay = () => {
         <div>
           <div className="inline-flex items-center gap-2 bg-[#892580]/10 text-[#892580] px-4 py-2 rounded-full text-sm font-medium mb-4">
             <Package className="w-4 h-4" />
-            Aloka Packages
+            SKL Packages
           </div>
           
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">

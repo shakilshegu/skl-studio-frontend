@@ -47,7 +47,7 @@ const MobileFilterModal = ({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Studio name or location..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#892580] focus:border-[#892580]"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]"
               />
             </div>
           </div>
@@ -58,7 +58,7 @@ const MobileFilterModal = ({
             <select
               value={selectedLocation}
               onChange={(e) => setSelectedLocation(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#892580] focus:border-[#892580]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]"
             >
               <option value="">All locations</option>
               {uniqueLocations.map(location => (
@@ -111,7 +111,7 @@ const MobileFilterModal = ({
           </button>
           <button
             onClick={() => setShowMobileFilters(false)}
-            className="flex-1 px-4 py-2 bg-[#892580] text-white rounded-md hover:bg-[#892580]"
+            className="flex-1 px-4 py-2 bg-[#2563EB] text-white rounded-md hover:bg-[#2563EB]"
           >
             Apply Filters
           </button>

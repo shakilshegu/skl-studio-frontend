@@ -96,24 +96,24 @@ const PartnerSupportPage = () => {
       title: "Phone Support",
       description: "Speak with our experts",
       availability: "Mon-Fri 9AM-6PM",
-      contact: "+91 98765 43210",
+      contact: "+91 7265 43222210",
       action: "Call Now",
       color: "bg-green-500",
       bgColor: "bg-green-50",
       textColor: "text-green-600",
-      href: "tel:+919876543210"
+      href: "tel:+91965423674"
     },
     {
       icon: Mail,
       title: "Email Support",
       description: "Send detailed questions",
       availability: "Response in 24 hours",
-      contact: "support@aloka.com",
+      contact: "support@skl.com",
       action: "Send Email",
       color: "bg-purple-500",
       bgColor: "bg-purple-50",
       textColor: "text-purple-600",
-      href: "mailto:support@aloka.com"
+      href: "mailto:support@skl.com"
     }
   ];
 
@@ -369,7 +369,7 @@ const PartnerSupportPage = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600">Phone</p>
-                  <p className="text-xs font-medium text-gray-900">+91 98765 43210</p>
+                  <p className="text-xs font-medium text-gray-900">+91 4342343234</p>
                 </div>
               </div>
               
@@ -379,7 +379,7 @@ const PartnerSupportPage = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600">Email</p>
-                  <p className="text-xs font-medium text-gray-900">support@aloka.com</p>
+                  <p className="text-xs font-medium text-gray-900">support@SKL.com</p>
                 </div>
               </div>
               

@@ -12,7 +12,7 @@ const BookingsTable = ({ currentBookings = [], upcomingBookings = [] }) => {
       {/* Header */}
       <div className="flex justify-between items-center p-6 border-b border-gray-200">
         <div className="flex items-center gap-2">
-          <Calendar className="text-[#892580]" size={20} />
+          <Calendar className="text-[#2563EB]" size={20} />
           <h3 className="text-lg font-semibold text-gray-900">Bookings</h3>
         </div>
         
@@ -23,7 +23,7 @@ const BookingsTable = ({ currentBookings = [], upcomingBookings = [] }) => {
               key={tab}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                 activeTab === tab
-                  ? "bg-white text-[#892580] shadow-sm"
+                  ? "bg-white text-[#2563EB] shadow-sm"
                   : "text-gray-600 hover:text-gray-900"
               }`}
               onClick={() => setActiveTab(tab)}
@@ -125,7 +125,7 @@ const BookingRow = ({ booking }) => {
       </td>
       
       <td className="px-6 py-4">
-        <button className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-[#892580] bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors duration-200">
+        <button className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-[#2563EB] bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors duration-200">
           <Eye size={14} />
           View
         </button>

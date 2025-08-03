@@ -351,11 +351,11 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
           <div className="max-w-md mx-auto w-full">
             {/* Logo and partner badge */}
             <div className="flex items-center gap-3 mb-8">
-              <h1 className="text-3xl lg:text-4xl font-bold text-[#892580]">
-                ALOKA
+              <h1 className="text-3xl lg:text-4xl font-bold text-[#2563EB]">
+                SKL
               </h1>
               {isPartnerLogin && (
-                <span className="bg-[#892580] text-white px-4 py-1 rounded-full text-sm font-semibold">
+                <span className="bg-[#2563EB] text-white px-4 py-1 rounded-full text-sm font-semibold">
                   Partner
                 </span>
               )}
@@ -372,7 +372,7 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
                 <p className="font-medium text-gray-800">{phoneNumber}</p>
                 <button
                   onClick={handleEditPhoneNumber}
-                  className="ml-3 text-[#892580] hover:text-[#892580]/80 font-medium text-sm underline focus:outline-none"
+                  className="ml-3 text-[#2563EB] hover:text-[#2563EB]/80 font-medium text-sm underline focus:outline-none"
                 >
                   Edit
                 </button>
@@ -407,7 +407,7 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
                           isInvalid
                             ? "border-red-300 bg-red-50"
                             : otpValue.length === index && isFocused
-                            ? "border-[#892580] shadow-sm"
+                            ? "border-[#2563EB] shadow-sm"
                             : "border-gray-200"
                         }`}
                       onClick={() => {
@@ -418,7 +418,7 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
                       {otpDigits[index]}
 
                       {otpValue.length === index && isFocused && (
-                        <div className="h-8 w-0.5 bg-[#892580] animate-pulse ml-0.5"></div>
+                        <div className="h-8 w-0.5 bg-[#2563EB] animate-pulse ml-0.5"></div>
                       )}
                     </div>
                   ))}
@@ -453,7 +453,7 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
                   className={`mt-2 text-sm font-medium focus:outline-none
                     ${
                       canResend
-                        ? "text-[#892580] hover:text-[#892580]/80"
+                        ? "text-[#2563EB] hover:text-[#2563EB]/80"
                         : "text-gray-400"
                     }`}
                 >

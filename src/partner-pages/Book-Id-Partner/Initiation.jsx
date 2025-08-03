@@ -21,11 +21,11 @@ export default function PartnerInitiation({
   const adminPackageData = bookingData?.adminPackageBookingId?.packageId;
 
   const [activeTab, setActiveTab] = useState(
-    adminPackage ? "Aloka Package" : "Services"
+    adminPackage ? "SKL Package" : "Services"
   );
 
   const tabs = adminPackage
-    ? ["Aloka Package"]
+    ? ["SKL Package"]
     : ["Services", "Packages", "Equipments", "Helpers"];
 
   const dates = bookingData?.bookingDates || "";

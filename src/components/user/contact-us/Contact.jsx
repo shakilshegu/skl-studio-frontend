@@ -44,8 +44,8 @@ function ContactUs() {
       icon: Mail,
       title: "Email Us",
       description: "Our friendly team is here to help",
-      contact: "hello@aloka.com",
-      action: "mailto:hello@aloka.com",
+      contact: "hello@SKL.com",
+      action: "mailto:hello@SKL.com",
       gradient: "from-blue-500 to-cyan-500"
     },
     {
@@ -180,7 +180,7 @@ function ContactUs() {
 
             {/* Quick Stats */}
             <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl p-8 text-white mt-12">
-              <h3 className="text-2xl font-bold mb-6">Why Choose Aloka Support?</h3>
+              <h3 className="text-2xl font-bold mb-6">Why Choose SKL Support?</h3>
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
                   <div className="text-3xl font-bold mb-2">&lt; 2hrs</div>

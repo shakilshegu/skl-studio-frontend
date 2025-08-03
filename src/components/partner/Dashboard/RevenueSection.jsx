@@ -14,7 +14,7 @@ const RevenueSection = ({ revenueData }) => {
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-4">
-          <TrendingUp className="text-[#892580]" size={24} />
+          <TrendingUp className="text-[#2563EB]" size={24} />
           <h2 className="text-2xl font-bold text-gray-900">Revenue Analytics</h2>
         </div>
         

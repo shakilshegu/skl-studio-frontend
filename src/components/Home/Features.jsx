@@ -57,7 +57,7 @@ const Features = () => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#892580]/10 text-[#892580] rounded-full text-sm font-medium mb-4">
             <Star className="w-4 h-4" />
-            Why Choose Aloka
+            Why Choose SKL
           </div>
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
             Everything You Need for 
@@ -145,11 +145,11 @@ const Features = () => {
             </div>
             
             <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              Experience the Aloka Difference Today
+              Experience the SKL Difference Today
             </h3>
             
             <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-              Join thousands of creative professionals who trust Aloka for their studio needs. 
+              Join thousands of creative professionals who trust SKL for their studio needs. 
               Book your perfect studio space and bring your vision to life.
             </p>
 

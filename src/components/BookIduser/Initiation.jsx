@@ -25,11 +25,11 @@ export default function UserInitiation({ role, bookingData, setActiveStep }) {
   const adminPackageData = bookingData?.adminPackageBookingId?.packageId;
 
   const [activeTab, setActiveTab] = useState(
-    adminPackage ? "Aloka Package" : "Services"
+    adminPackage ? "SKL Package" : "Services"
   );
 
   const tabs = adminPackage
-    ? ["Aloka Package"]
+    ? ["SKL Package"]
     : ["Services", "Packages", "Equipments", "Helpers"];
 
   // Safe destructuring with fallbacks
@@ -73,7 +73,7 @@ export default function UserInitiation({ role, bookingData, setActiveStep }) {
       <div className=" mx-auto space-y-6">
         {/* Header Section */}
         {/* <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-                    <div className="bg-[#892580] px-8 py-6">
+                    <div className="bg-[#2563EB] px-8 py-6">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-4">
                                 <div className="bg-white/20 p-3 rounded-xl">
@@ -131,11 +131,11 @@ export default function UserInitiation({ role, bookingData, setActiveStep }) {
                 </h3>
                 <div className="space-y-2">
                   <div className="flex items-center space-x-2 text-gray-600">
-                    <Phone size={16} className="text-[#892580]" />
+                    <Phone size={16} className="text-[#2563EB]" />
                     <span className="text-sm">{mobileNumber || "N/A"}</span>
                   </div>
                   <div className="flex items-center space-x-2 text-gray-600">
-                    <Mail size={16} className="text-[#892580]" />
+                    <Mail size={16} className="text-[#2563EB]" />
                     <span className="text-sm">{email || "N/A"}</span>
                   </div>
                 </div>
@@ -145,7 +145,7 @@ export default function UserInitiation({ role, bookingData, setActiveStep }) {
             {/* Booking Dates */}
             <div className="space-y-4">
               <h4 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                <Calendar className="text-[#892580]" size={20} />
+                <Calendar className="text-[#2563EB]" size={20} />
                 Scheduled Dates
               </h4>
               <div className="space-y-3">
@@ -174,7 +174,7 @@ export default function UserInitiation({ role, bookingData, setActiveStep }) {
                         >
                           <div className="flex items-center gap-3 text-sm text-gray-700 mb-2">
                             <div className="bg-green-100 p-1 rounded-lg">
-                              <Calendar size={14} className="text-[#892580]" />
+                              <Calendar size={14} className="text-[#2563EB]" />
                             </div>
                             <span className="font-medium">{formattedDate}</span>
                           </div>
@@ -210,7 +210,7 @@ export default function UserInitiation({ role, bookingData, setActiveStep }) {
                       onClick={() => setActiveTab(tab)}
                       className={`flex items-center space-x-2 px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300 ${
                         activeTab === tab
-                          ? "bg-[#892580] text-white shadow-lg"
+                          ? "bg-[#2563EB] text-white shadow-lg"
                           : "text-gray-600 hover:text-gray-800 hover:bg-gray-50"
                       }`}
                     >
@@ -252,14 +252,14 @@ export default function UserInitiation({ role, bookingData, setActiveStep }) {
                         />
                       </div>
                       <div className="p-6">
-                        <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-[#892580] transition-colors">
+                        <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-[#2563EB] transition-colors">
                           {adminPackageData?.name}
                         </h3>
                         <p className="text-gray-500 text-sm mb-4 line-clamp-2">
                           {adminPackageData?.description}
                         </p>
                         <div className="flex justify-between items-center">
-                          <div className="bg-[#892580] text-white px-4 py-2 rounded-lg font-bold">
+                          <div className="bg-[#2563EB] text-white px-4 py-2 rounded-lg font-bold">
                             ₹{adminPackageData.price}
                           </div>
                         </div>
@@ -299,19 +299,19 @@ export default function UserInitiation({ role, bookingData, setActiveStep }) {
                             alt={service?.serviceId?.name}
                             className="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
-                          <div className="absolute top-4 right-4 bg-[#892580] text-white px-3 py-1 rounded-full text-sm font-bold">
+                          <div className="absolute top-4 right-4 bg-[#2563EB] text-white px-3 py-1 rounded-full text-sm font-bold">
                             x{service?.count}
                           </div>
                         </div>
                         <div className="p-6">
-                          <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-[#892580] transition-colors">
+                          <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-[#2563EB] transition-colors">
                             {service?.serviceId?.name}
                           </h3>
                           <p className="text-gray-500 text-sm mb-4 line-clamp-2">
                             {service?.serviceId?.description}
                           </p>
                           <div className="flex justify-between items-center">
-                            <div className="bg-[#892580] text-white px-4 py-2 rounded-lg font-bold">
+                            <div className="bg-[#2563EB] text-white px-4 py-2 rounded-lg font-bold">
                               ₹{service?.serviceId?.price}
                             </div>
                             <div className="text-gray-600 text-sm font-medium">
@@ -356,14 +356,14 @@ export default function UserInitiation({ role, bookingData, setActiveStep }) {
                           </div>
                         </div>
                         <div className="p-6">
-                          <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-[#892580] transition-colors">
+                          <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-[#2563EB] transition-colors">
                             {packageItem?.packageId?.name}
                           </h3>
                           <p className="text-gray-500 text-sm mb-4 line-clamp-2">
                             {packageItem?.packageId?.description}
                           </p>
                           <div className="flex justify-between items-center">
-                            <div className="bg-[#892580] text-white px-4 py-2 rounded-lg font-bold">
+                            <div className="bg-[#2563EB] text-white px-4 py-2 rounded-lg font-bold">
                               ₹{packageItem?.packageId?.price}
                             </div>
                             <div className="text-gray-600 text-sm font-medium">
@@ -408,14 +408,14 @@ export default function UserInitiation({ role, bookingData, setActiveStep }) {
                           </div>
                         </div>
                         <div className="p-6">
-                          <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-[#892580] transition-colors">
+                          <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-[#2563EB] transition-colors">
                             {equipment?.equipmentId?.name}
                           </h3>
                           <p className="text-gray-500 text-sm mb-4 line-clamp-2">
                             {equipment?.equipmentId?.description}
                           </p>
                           <div className="flex justify-between items-center">
-                            <div className="bg-[#892580] text-white px-4 py-2 rounded-lg font-bold">
+                            <div className="bg-[#2563EB] text-white px-4 py-2 rounded-lg font-bold">
                               ₹{equipment?.equipmentId?.price}
                             </div>
                             <div className="text-gray-600 text-sm font-medium">
@@ -453,13 +453,13 @@ export default function UserInitiation({ role, bookingData, setActiveStep }) {
                           <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl mb-4 flex items-center justify-center">
                             <Users className="h-8 w-8 text-white" />
                           </div>
-                          <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-[#892580] transition-colors">
+                          <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-[#2563EB] transition-colors">
                             {helper?.helperId?.name}
                           </h3>
                           <p className="text-gray-500 text-sm mb-4 line-clamp-2">
                             {helper?.helperId?.description}
                           </p>
-                          <div className="bg-[#892580] text-white px-4 py-2 rounded-lg font-bold inline-block">
+                          <div className="bg-[#2563EB] text-white px-4 py-2 rounded-lg font-bold inline-block">
                             ₹{helper?.helperId?.price}
                           </div>
                         </div>
@@ -487,7 +487,7 @@ export default function UserInitiation({ role, bookingData, setActiveStep }) {
         {/* Navigation */}
         <div className="flex justify-center">
           <button
-            className="px-8 py-3 bg-[#892580] text-white rounded-xl hover:from-green-700 hover:to-blue-700 transition-all font-medium shadow-lg"
+            className="px-8 py-3 bg-[#2563EB] text-white rounded-xl hover:from-green-700 hover:to-blue-700 transition-all font-medium shadow-lg"
             onClick={() => setActiveStep((prev) => prev + 1)}
           >
             Next

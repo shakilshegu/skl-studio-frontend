@@ -619,7 +619,7 @@ const PartnerOnboarding = () => {
         <div className="max-w-4xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold text-[#892580]">ALOKA</h1>
+              <h1 className="text-2xl font-bold text-[#892580]">SKL</h1>
               <span className="bg-[#892580] text-white px-3 py-1 rounded-full text-sm font-semibold">
                 Partner
               </span>

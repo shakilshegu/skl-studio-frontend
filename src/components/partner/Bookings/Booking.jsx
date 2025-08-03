@@ -265,7 +265,7 @@ console.log(data,"----------------------------");
     const statusConfig = {
       "pending": { bg: "bg-gradient-to-r from-yellow-400 to-yellow-500", text: "text-white", label: "Pending", icon: "⏳" },
       "confirmed": { bg: "bg-gradient-to-r from-blue-500 to-blue-600", text: "text-white", label: "Confirmed", icon: "✓" },
-      "in-progress": { bg: "bg-gradient-to-r from-purple-600 to-[#892580]", text: "text-white", label: "Ongoing", icon: "🔄" },
+      "in-progress": { bg: "bg-gradient-to-r from-purple-600 to-[#2563EB]", text: "text-white", label: "Ongoing", icon: "🔄" },
       "completed": { bg: "bg-gradient-to-r from-green-500 to-emerald-600", text: "text-white", label: "Completed", icon: "✅" },
       "cancelled": { bg: "bg-gradient-to-r from-red-500 to-red-600", text: "text-white", label: "Cancelled", icon: "❌" },
     };
@@ -312,7 +312,7 @@ console.log(data,"----------------------------");
           onClick={() => handlePageChange(pageNumber)}
           className={`px-4 py-2 border rounded-lg transition-colors ${
             currentPage === pageNumber 
-              ? "bg-[#892580] text-white border-[#892580]" 
+              ? "bg-[#2563EB] text-white border-[#2563EB]" 
               : "bg-white border-gray-200 hover:bg-gray-50"
           }`}
         >
@@ -326,7 +326,7 @@ console.log(data,"----------------------------");
     return (
       <div className="p-6 w-full border rounded-lg bg-white">
         <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#892580]"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2563EB]"></div>
         </div>
       </div>
     );
@@ -357,7 +357,7 @@ console.log(data,"----------------------------");
                 placeholder="Search bookings, customers, or assignees..."
                 value={searchTerm}
                 onChange={handleSearchChange}
-                className="w-full lg:w-64 pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg shadow-sm focus:ring-2 focus:ring-[#892580] focus:border-transparent transition-all duration-200"
+                className="w-full lg:w-64 pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg shadow-sm focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition-all duration-200"
               />
               <svg className="absolute left-3 top-3 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -367,7 +367,7 @@ console.log(data,"----------------------------");
             <select
               value={statusFilter}
               onChange={handleStatusFilterChange}
-              className="px-4 py-2.5 border border-gray-200 rounded-lg shadow-sm focus:ring-2 focus:ring-[#892580] focus:border-transparent bg-white"
+              className="px-4 py-2.5 border border-gray-200 rounded-lg shadow-sm focus:ring-2 focus:ring-[#2563EB] focus:border-transparent bg-white"
             >
               <option value="all">All Status</option>
               <option value="pending">Pending</option>
@@ -514,7 +514,7 @@ const BookingRow = React.memo(({
   return (
     <tr className="hover:bg-gray-50/50 transition-colors duration-150">
       <td className="px-6 py-4">
-        <div className="font-mono text-sm font-medium text-[#892580]">
+        <div className="font-mono text-sm font-medium text-[#2563EB]">
           #{booking.customBookingId}
         </div>
       </td>
@@ -545,7 +545,7 @@ const BookingRow = React.memo(({
           {booking.bookingDates?.length > 1 && (
             <button
               onClick={() => onToggleExpansion(booking._id)}
-              className="ml-2 text-[#892580] hover:bg-purple-50 p-1 rounded-full transition-colors"
+              className="ml-2 text-[#2563EB] hover:bg-purple-50 p-1 rounded-full transition-colors"
             >
               {expandedRows[booking._id] ? (
                 <ChevronUp size={16} />
@@ -609,7 +609,7 @@ const ExpandedBookingRow = React.memo(({ booking, getTotalDuration }) => {
               .map((date, idx) => (
                 <div key={idx} className="flex items-center justify-between bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
                   <div className="flex items-center gap-3">
-                    <div className="bg-gradient-to-r from-[#892580] to-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+                    <div className="bg-gradient-to-r from-[#2563EB] to-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
                       {idx + 1}
                     </div>
                     <div className="flex items-center gap-2">
@@ -747,7 +747,7 @@ const CustomActionMenu = React.memo(({ booking, onStatusChange, onAssignWork, on
       {(isOpen && booking.status !== "cancelled") && (
         <div className="absolute right-0 w-48 bg-white shadow-lg border border-gray-200 rounded-lg py-1 z-10">
           <button
-            className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-[#892580] hover:text-white transition-colors"
+            className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-[#2563EB] hover:text-white transition-colors"
             onClick={() => handleViewDetails(booking._id)}
           >
             <Eye size={16} />
@@ -918,7 +918,7 @@ const AssignWorkModal = React.memo(({ booking, teamMembers, onClose, onAssign, i
               onChange={handleNotesChange}
               disabled={isLoading}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#892580] focus:border-transparent disabled:opacity-50"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-transparent disabled:opacity-50"
               placeholder="Add any special instructions..."
             />
           </div>
@@ -935,7 +935,7 @@ const AssignWorkModal = React.memo(({ booking, teamMembers, onClose, onAssign, i
             <button
               type="submit"
               disabled={selectedUsers?.length === 0 || isLoading}
-              className="flex-1 px-4 py-2 bg-[#892580] text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors"
+              className="flex-1 px-4 py-2 bg-[#2563EB] text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors"
             >
               {isLoading ? 'Assigning...' : 'Assign Work'}
             </button>

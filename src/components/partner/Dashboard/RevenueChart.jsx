@@ -78,7 +78,7 @@ const RevenueChart = () => {
                     if (!chartArea) return null;
                     return createGradient(ctx, chartArea);
                 },
-                borderColor: "#892580",
+                borderColor: "#2563EB",
                 borderWidth: 2,
                 borderRadius: 8,
                 borderSkipped: false,
@@ -95,7 +95,7 @@ const RevenueChart = () => {
             {
                 label: "Revenue",
                 data: getData(),
-                borderColor: "#892580",
+                borderColor: "#2563EB",
                 backgroundColor: (context) => {
                     const chart = context.chart;
                     const { ctx, chartArea } = chart;
@@ -104,7 +104,7 @@ const RevenueChart = () => {
                 },
                 fill: true,
                 tension: 0.4,
-                pointBackgroundColor: "#892580",
+                pointBackgroundColor: "#2563EB",
                 pointBorderColor: "#ffffff",
                 pointBorderWidth: 3,
                 pointRadius: 6,
@@ -135,7 +135,7 @@ const RevenueChart = () => {
                 backgroundColor: 'rgba(0, 0, 0, 0.8)',
                 titleColor: '#ffffff',
                 bodyColor: '#ffffff',
-                borderColor: '#892580',
+                borderColor: '#2563EB',
                 borderWidth: 1,
                 cornerRadius: 8,
                 displayColors: false,
@@ -238,7 +238,7 @@ const RevenueChart = () => {
                                 onClick={() => setChartType(option.id)}
                                 className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
                                     chartType === option.id
-                                        ? "bg-white text-[#892580] shadow-sm"
+                                        ? "bg-white text-[#2563EB] shadow-sm"
                                         : "text-gray-600 hover:text-gray-900"
                                 }`}
                             >
@@ -256,7 +256,7 @@ const RevenueChart = () => {
                     <select
                         value={timeRange}
                         onChange={(e) => setTimeRange(e.target.value)}
-                        className="px-3 py-1.5 border border-gray-200 rounded-lg text-sm font-medium focus:ring-2 focus:ring-[#892580] focus:border-transparent bg-white"
+                        className="px-3 py-1.5 border border-gray-200 rounded-lg text-sm font-medium focus:ring-2 focus:ring-[#2563EB] focus:border-transparent bg-white"
                     >
                         {timeRangeOptions.map((option) => (
                             <option key={option.id} value={option.id}>

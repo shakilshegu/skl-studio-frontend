@@ -129,7 +129,7 @@ const ResetPasswordPage = () => {
             Secure Reset
           </h2>
           <p className="text-white/90 text-xl md:text-2xl max-w-2xl mx-auto">
-            Create a new password for your ALOKA account
+            Create a new password for your SKl account
           </p>
         </div>
       </div>
@@ -139,7 +139,7 @@ const ResetPasswordPage = () => {
         <div className="max-w-md mx-auto w-full">
           {/* Logo */}
           <div className="flex items-center gap-3 mb-8">
-            <h1 className="text-3xl lg:text-4xl font-bold text-[#892580]">ALOKA</h1>
+            <h1 className="text-3xl lg:text-4xl font-bold text-[#892580]">SKL</h1>
           </div>
 
           {isSuccess ? (

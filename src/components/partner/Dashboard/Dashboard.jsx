@@ -123,7 +123,7 @@ const DashboardPage = () => {
       <div className=" mx-auto space-y-8">
         {/* Page Header */}
         <div className="flex items-center gap-3 mb-8">
-          <div className="bg-gradient-to-r from-[#892580] to-purple-600 p-3 rounded-xl">
+          <div className="bg-gradient-to-r from-[#2563EB] to-purple-600 p-3 rounded-xl">
             <BarChart3 className="text-white" size={24} />
           </div>
           <div>

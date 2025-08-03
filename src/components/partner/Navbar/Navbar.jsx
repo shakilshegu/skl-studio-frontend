@@ -113,7 +113,7 @@ const PartnerNavbar = ({ onMenuClick, showMenuButton = false }) => {
               className="text-2xl font-bold text-[#892580] cursor-pointer hover:text-[#a12d8a] transition-colors" 
               onClick={() => router.push("/partner/dashboard")}
             >
-              ALOKA
+              SKL
             </div>
           </div>
 

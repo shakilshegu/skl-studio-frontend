@@ -184,7 +184,7 @@ const PartnerLoginPage = () => {
       <div className="flex min-h-screen w-full flex-row-reverse">
         {/* Left side - Image (reversed for partner) */}
         <div className="relative hidden md:block md:w-3/5 lg:w-2/3">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#892580]/90 to-[#892580]/40 z-10 mix-blend-multiply"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/90 to-[#2563EB]/40 z-10 mix-blend-multiply"></div>
           <Image 
             src="/Assets/bok2.png" 
             alt="Aloka Partner" 
@@ -222,8 +222,8 @@ const PartnerLoginPage = () => {
           <div className="max-w-md mx-auto w-full">
             {/* Logo and partner badge */}
             <div className="flex items-center gap-3 mb-8">
-              <h1 className="text-3xl lg:text-4xl font-bold text-[#892580]">ALOKA</h1>
-              <span className="bg-[#892580] text-white px-4 py-1 rounded-full text-sm font-semibold">
+              <h1 className="text-3xl lg:text-4xl font-bold text-[#2563EB]">SKL</h1>
+              <span className="bg-[#2563EB] text-white px-4 py-1 rounded-full text-sm font-semibold">
                 Partner
               </span>
             </div>
@@ -235,7 +235,7 @@ const PartnerLoginPage = () => {
                   onClick={() => setLoginMethod('login')}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     loginMethod === 'login'
-                    ? 'bg-[#892580] text-white'
+                    ? 'bg-[#2563EB] text-white'
                     : 'text-gray-600 hover:bg-gray-200'
                   }`}
                 >
@@ -245,7 +245,7 @@ const PartnerLoginPage = () => {
                   onClick={() => setLoginMethod('register')}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     loginMethod === 'register'
-                    ? 'bg-[#892580] text-white'
+                    ? 'bg-[#2563EB] text-white'
                     : 'text-gray-600 hover:bg-gray-200'
                   }`}
                 >
@@ -270,7 +270,7 @@ const PartnerLoginPage = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {loginMethod === 'register' ? (
                 <div className="relative">
-                  <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden focus-within:border-[#892580] transition-colors">
+                  <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden focus-within:border-[#2563EB] transition-colors">
                     <span className="bg-gray-50 h-full px-4 py-3 text-gray-600 font-medium border-r-2 border-gray-200">
                       +91
                     </span>
@@ -296,7 +296,7 @@ const PartnerLoginPage = () => {
                 // Username and Password fields
                 <div className="space-y-4">
                   <div className="relative">
-                    <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden focus-within:border-[#892580] transition-colors">
+                    <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden focus-within:border-[#2563EB] transition-colors">
                       <span className="bg-gray-50 h-full px-4 py-3 text-gray-600 font-medium border-r-2 border-gray-200">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -315,7 +315,7 @@ const PartnerLoginPage = () => {
                   </div>
                   
                   <div className="relative">
-                    <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden focus-within:border-[#892580] transition-colors">
+                    <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden focus-within:border-[#2563EB] transition-colors">
                       <span className="bg-gray-50 h-full px-4 py-3 text-gray-600 font-medium border-r-2 border-gray-200">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -351,7 +351,7 @@ const PartnerLoginPage = () => {
                     <button
                       type="button"
                       onClick={() => setShowForgotPassword(true)}
-                      className="text-sm text-[#892580] hover:underline"
+                      className="text-sm text-[#2563EB] hover:underline"
                     >
                       Forgot password?
                     </button>
@@ -382,7 +382,7 @@ const PartnerLoginPage = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-[#892580] hover:bg-[#892580]/90 text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#892580] focus:ring-opacity-50 disabled:opacity-70"
+                  className="w-full bg-[#2563EB] hover:bg-[#2563EB]/90 text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:ring-opacity-50 disabled:opacity-70"
                 >
                   {isLoading ? (
                     <div className="flex items-center justify-center">
@@ -402,7 +402,7 @@ const PartnerLoginPage = () => {
                   <button
                     type="button"
                     onClick={toggleLoginMethod}
-                    className="text-[#892580] hover:underline text-sm font-medium"
+                    className="text-[#2563EB] hover:underline text-sm font-medium"
                   >
                     {loginMethod === 'login' 
                       ? "New partner? Register now"
@@ -416,7 +416,7 @@ const PartnerLoginPage = () => {
                   <button
                     type="button"
                     onClick={() => router.push('/login')}
-                    className="w-full border-2 border-[#892580] text-[#892580] hover:bg-[#892580]/5 font-semibold py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#892580] focus:ring-opacity-50"
+                    className="w-full border-2 border-[#2563EB] text-[#2563EB] hover:bg-[#2563EB]/5 font-semibold py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#892580] focus:ring-opacity-50"
                   >
                     User Login
                   </button>

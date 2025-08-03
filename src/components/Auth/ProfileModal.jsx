@@ -196,7 +196,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50 p-4">
       <div className="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-hidden shadow-2xl">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#892580] via-[#b84397] to-[#d946ef] p-6 text-white relative overflow-hidden">
+        <div className="bg-gradient-to-r from-[#2563EB] via-[#b84397] to-[#d946ef] p-6 text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="relative flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -245,7 +245,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
               )}
             </div>
             {isEditable && (
-              <label className="absolute -bottom-2 -right-2 w-10 h-10 bg-[#892580] rounded-xl flex items-center justify-center cursor-pointer hover:bg-[#a13399] transition-all shadow-lg group-hover:scale-110">
+              <label className="absolute -bottom-2 -right-2 w-10 h-10 bg-[#2563EB] rounded-xl flex items-center justify-center cursor-pointer hover:bg-[#a13399] transition-all shadow-lg group-hover:scale-110">
                 <Camera className="w-5 h-5 text-white" />
                 <input
                   type="file"
@@ -268,7 +268,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                  <User className="w-4 h-4 text-[#892580]" />
+                  <User className="w-4 h-4 text-[#2563EB]" />
                   First Name
                 </label>
                 <input
@@ -278,7 +278,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
                   onChange={handleInputChange}
                   className={`w-full px-4 py-3 border rounded-xl transition-all outline-none ${
                     isEditable 
-                      ? 'border-gray-300 focus:ring-2 focus:ring-[#892580] focus:border-transparent' 
+                      ? 'border-gray-300 focus:ring-2 focus:ring-[#2563EB] focus:border-transparent' 
                       : 'border-gray-200 bg-gray-50 text-gray-600'
                   }`}
                   disabled={!isEditable}
@@ -287,7 +287,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
               </div>
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                  <User className="w-4 h-4 text-[#892580]" />
+                  <User className="w-4 h-4 text-[#2563EB]" />
                   Last Name
                 </label>
                 <input
@@ -297,7 +297,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
                   onChange={handleInputChange}
                   className={`w-full px-4 py-3 border rounded-xl transition-all outline-none ${
                     isEditable 
-                      ? 'border-gray-300 focus:ring-2 focus:ring-[#892580] focus:border-transparent' 
+                      ? 'border-gray-300 focus:ring-2 focus:ring-[#2563EB] focus:border-transparent' 
                       : 'border-gray-200 bg-gray-50 text-gray-600'
                   }`}
                   disabled={!isEditable}
@@ -310,7 +310,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                  <Mail className="w-4 h-4 text-[#892580]" />
+                  <Mail className="w-4 h-4 text-[#2563EB]" />
                   Email Address
                 </label>
                 <input
@@ -325,7 +325,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
               </div>
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                  <Phone className="w-4 h-4 text-[#892580]" />
+                  <Phone className="w-4 h-4 text-[#2563EB]" />
                   Mobile Number
                 </label>
                 <input
@@ -343,7 +343,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
             {/* Gender Selection */}
             <div className="space-y-3">
               <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                <User className="w-4 h-4 text-[#892580]" />
+                <User className="w-4 h-4 text-[#2563EB]" />
                 Gender
               </label>
               <div className="flex flex-wrap gap-4">
@@ -356,10 +356,10 @@ const ProfileModal = ({ isOpen, onClose }) => {
                       checked={formData.gender === option}
                       onChange={handleInputChange}
                       disabled={!isEditable}
-                      className="w-4 h-4 text-[#892580] border-gray-300 focus:ring-[#892580] disabled:opacity-50"
+                      className="w-4 h-4 text-[#2563EB] border-gray-300 focus:ring-[#2563EB] disabled:opacity-50"
                     />
                     <span className={`text-sm transition-colors ${
-                      !isEditable ? "text-gray-500" : "text-gray-700 group-hover:text-[#892580]"
+                      !isEditable ? "text-gray-500" : "text-gray-700 group-hover:text-[#2563EB]"
                     }`}>
                       {option}
                     </span>

@@ -223,7 +223,7 @@ const RaiseTicketModal = ({
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-1">
                     <h4 className="font-semibold text-gray-900">
-                      {booking.packageId ? "Aloka Package" : booking?.entityDetails?.name}
+                      {booking.packageId ? "SKL Package" : booking?.entityDetails?.name}
                     </h4>
                     <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-md text-xs font-medium">
                       {booking.status?.toUpperCase()}

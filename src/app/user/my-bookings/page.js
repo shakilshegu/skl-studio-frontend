@@ -519,7 +519,7 @@ const getGridCols = (booking) => {
                         <div className="flex-1 min-w-0">
                           <div className="mb-2">
                             <h3 className="text-lg sm:text-xl font-bold text-gray-900 truncate">
-                              {booking.packageId ? "Aloka Package" : booking?.entityDetails?.name}
+                              {booking.packageId ? "SKL Package" : booking?.entityDetails?.name}
                             </h3>
                             
                             <div className="flex flex-wrap gap-1 sm:gap-2 mt-2">
