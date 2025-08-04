@@ -5,28 +5,32 @@ import { verifyOTP } from "../../services/Authentication/login.service";
 import { useMutation } from "@tanstack/react-query";
 import { setUser } from "../../stores/authSlice";
 import { showToast } from "../Toast/Toast.jsx";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
 
-const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
+const OtpVerification = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const email = searchParams.get('email');
+  const isPartnerLogin = searchParams.get('isPartnerLogin') === 'true';
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
   const dispatch = useDispatch();
   const [otpValue, setOtpValue] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
   const [showEmailPasswordForm, setShowEmailPasswordForm] = useState(false);
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [userData, setUserData] = useState(null);
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [timer, setTimer] = useState(30);
   const [canResend, setCanResend] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState("");
 
   useEffect(() => {
     if (timer > 0 && !canResend) {
@@ -41,15 +45,18 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
 
   const mutation = useMutation({
     mutationFn: async (otpString) => {
+      console.log("Mutation function called with:", otpString); // Debug log
       setIsLoading(true);
       try {
-        const response = await verifyOTP(phoneNumber, otpString);
+        const response = await verifyOTP(email, otpString);
+        console.log("API Response:", response);
         return response;
       } finally {
         setIsLoading(false);
       }
     },
     onSuccess: (data) => {
+      console.log("Mutation success:", data);
       if (data.success) {
         const authData = JSON.parse(localStorage.getItem("auth") || "{}");
         authData.token = data.token;
@@ -59,7 +66,7 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
         setIsInvalid(false);
         setUserData(data);
 
-        if (data.user.email) {
+        if (data.user.mobile) {
           setShowEmailPasswordForm(false);
           dispatch(
             setUser({
@@ -68,7 +75,7 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
               role: data.role,
             })
           );
-          
+
           // Route based on user type
           if (isPartnerLogin) {
             if (!data.isBusinessUser) {
@@ -101,7 +108,8 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
     if (/^\d*$/.test(value) && value.length <= 4) {
       setOtpValue(value);
 
-      if (value.length === 4) {
+      if (value.length === 4 && !mutation.isLoading) {
+        console.log("Calling verifyOTP with:", value); // Debug log
         mutation.mutate(value);
       }
     }
@@ -120,23 +128,18 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
     router.push(loginPath);
   };
 
-  const validateEmail = (email) => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  };
-
   const handleEmailPasswordSubmit = async (e) => {
     e.preventDefault();
 
-    setEmailError("");
+    setPhoneError("");
     setPasswordError("");
 
-    if (!email) {
-      setEmailError("Email is required");
+    if (!phone) {
+      setPhoneError("Phone number is required");
       return;
     }
-    if (!validateEmail(email)) {
-      setEmailError("Please enter a valid email address");
+    if (!/^\d{10}$/.test(phone)) {
+      setPhoneError("Please enter a valid 10-digit phone number");
       return;
     }
 
@@ -162,7 +165,7 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
 
       const response = await axios.post(
         `${BASE_URL}/auth/update-credentials`,
-        { email, password },
+        { mobile:phone, password },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -202,8 +205,8 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
       console.error(error);
       showToast(
         error?.response?.data?.error ||
-          error?.response?.data?.message ||
-          "Something went wrong",
+        error?.response?.data?.message ||
+        "Something went wrong",
         "error"
       );
     } finally {
@@ -229,23 +232,22 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
             <form onSubmit={handleEmailPasswordSubmit} className="space-y-4">
               <div>
                 <label
-                  htmlFor="email"
+                  htmlFor="phone"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Email Address
+                  Phone Number
                 </label>
                 <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#892580] focus:border-[#892580] outline-none transition-colors ${
-                    emailError ? "border-red-300 bg-red-50" : "border-gray-300"
-                  }`}
-                  placeholder="your.email@example.com"
+                  id="phone"
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#892580] focus:border-[#892580] outline-none transition-colors ${phoneError ? "border-red-300 bg-red-50" : "border-gray-300"
+                    }`}
+                  placeholder="Enter your phone number"
                 />
-                {emailError && (
-                  <p className="mt-1 text-sm text-red-600">{emailError}</p>
+                {phoneError && (
+                  <p className="mt-1 text-sm text-red-600">{phoneError}</p>
                 )}
               </div>
 
@@ -261,11 +263,10 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#892580] focus:border-[#892580] outline-none transition-colors ${
-                    passwordError
-                      ? "border-red-300 bg-red-50"
-                      : "border-gray-300"
-                  }`}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#892580] focus:border-[#892580] outline-none transition-colors ${passwordError
+                    ? "border-red-300 bg-red-50"
+                    : "border-gray-300"
+                    }`}
                   placeholder="Create a secure password"
                 />
               </div>
@@ -282,11 +283,10 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#892580] focus:border-[#892580] outline-none transition-colors ${
-                    passwordError
-                      ? "border-red-300 bg-red-50"
-                      : "border-gray-300"
-                  }`}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#892580] focus:border-[#892580] outline-none transition-colors ${passwordError
+                    ? "border-red-300 bg-red-50"
+                    : "border-gray-300"
+                    }`}
                   placeholder="Confirm your password"
                 />
                 {passwordError && (
@@ -316,9 +316,8 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
       )}
 
       <div
-        className={`flex min-h-screen w-full ${
-          isPartnerLogin ? "flex-row-reverse" : "flex-row"
-        }`}
+        className={`flex min-h-screen w-full ${isPartnerLogin ? "flex-row-reverse" : "flex-row"
+          }`}
       >
         {/* Left side - Image */}
         <div className="relative hidden md:block md:w-3/5 lg:w-2/3">
@@ -338,7 +337,7 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
               {isPartnerLogin ? "Partner Verification" : "Verify Your Identity"}
             </h2>
             <p className="text-white/90 text-xl md:text-2xl max-w-2xl mx-auto">
-              {isPartnerLogin 
+              {isPartnerLogin
                 ? "We're committed to keeping your business partnership secure"
                 : "We're committed to keeping your studio booking experience secure"
               }
@@ -363,13 +362,13 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
 
             <div className="mb-8">
               <h2 className="text-xl lg:text-2xl font-semibold text-gray-800 mb-2">
-                Verify Phone Number
+                Verify OTP
               </h2>
               <p className="text-gray-600 mb-1">
                 Please enter the 4-digit code sent to
               </p>
               <div className="flex items-center">
-                <p className="font-medium text-gray-800">{phoneNumber}</p>
+                <p className="font-medium text-gray-800">{email}</p>
                 <button
                   onClick={handleEditPhoneNumber}
                   className="ml-3 text-[#2563EB] hover:text-[#2563EB]/80 font-medium text-sm underline focus:outline-none"
@@ -395,18 +394,16 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
                 />
 
                 <div
-                  className={`flex justify-between space-x-4 ${
-                    isInvalid ? "shake-animation" : ""
-                  }`}
+                  className={`flex justify-between space-x-4 ${isInvalid ? "shake-animation" : ""
+                    }`}
                 >
                   {[0, 1, 2, 3].map((index) => (
                     <div
                       key={index}
                       className={`relative w-full h-16 flex items-center justify-center text-2xl font-bold rounded-xl border-2 transition-all bg-gray-50
-                        ${
-                          isInvalid
-                            ? "border-red-300 bg-red-50"
-                            : otpValue.length === index && isFocused
+                        ${isInvalid
+                          ? "border-red-300 bg-red-50"
+                          : otpValue.length === index && isFocused
                             ? "border-[#2563EB] shadow-sm"
                             : "border-gray-200"
                         }`}
@@ -451,10 +448,9 @@ const OtpVerification = ({ phoneNumber, isPartnerLogin }) => {
                   onClick={handleResendOtp}
                   disabled={!canResend}
                   className={`mt-2 text-sm font-medium focus:outline-none
-                    ${
-                      canResend
-                        ? "text-[#2563EB] hover:text-[#2563EB]/80"
-                        : "text-gray-400"
+                    ${canResend
+                      ? "text-[#2563EB] hover:text-[#2563EB]/80"
+                      : "text-gray-400"
                     }`}
                 >
                   {canResend

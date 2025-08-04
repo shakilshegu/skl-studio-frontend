@@ -8,13 +8,13 @@ import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/stores/authSlice.js';
 import { Eye, EyeOff } from 'lucide-react';
-import ForgotPasswordModal from '@/components/forgot-password/ForgotPassword'; 
+import ForgotPasswordModal from '@/components/forgot-password/ForgotPassword';
 
 const UserLoginPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -23,9 +23,10 @@ const UserLoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loginMethod, setLoginMethod] = useState('login');
 
-  const handlePhoneNumberChange = (e) => {
-    setPhoneNumber(e.target.value);
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
+
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -40,16 +41,18 @@ const UserLoginPage = () => {
   };
 
   const sendOtpMutation = useMutation({
-    mutationFn: async ({ phoneNumber }) => {
-      const data = await sendOTP(phoneNumber);
+    mutationFn: async ({ email }) => {
+      const data = await sendOTP(email);
       return data;
     },
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
       showToast('OTP sent successfully!', 'success');
+      const emailToSend = variables.email;
       const queryParams = new URLSearchParams({
-        phoneNumber,
+        email: emailToSend,
         isPartnerLogin: 'false'
       }).toString();
+      console.log("Navigating with params:", queryParams);
       router.push(`/otp?${queryParams}`);
     },
     onMutate: () => {
@@ -71,7 +74,7 @@ const UserLoginPage = () => {
       const data = await loginWithCredentials(username, password, false);
       return data;
     },
-    onSuccess: (data) => {  
+    onSuccess: (data) => {
       dispatch(
         setUser({
           token: data.token,
@@ -94,12 +97,11 @@ const UserLoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (loginMethod === 'register') {
-      if (phoneNumber.length === 10) {
-        await sendOtpMutation.mutateAsync({ phoneNumber });
+      if (email && /\S+@\S+\.\S+/.test(email)) {
+        await sendOtpMutation.mutateAsync({ email });
       } else {
-        showToast('Please enter a valid 10-digit phone number.', 'error');
+        showToast('Please enter a valid email address.', 'error');
       }
     } else {
       if (username && password) {
@@ -123,15 +125,15 @@ const UserLoginPage = () => {
         {/* Left side - Image */}
         <div className="relative hidden md:block md:w-3/5 lg:w-2/3">
           <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/90 to-[#2563EB]/40 z-10 mix-blend-multiply"></div>
-          <Image 
-            src="/Assets/bok2.png" 
-            alt="SKL" 
-            layout="fill" 
-            objectFit="cover" 
-            priority 
+          <Image
+            src="/Assets/bok2.png"
+            alt="SKL"
+            layout="fill"
+            objectFit="cover"
+            priority
             className="z-0"
           />
-          
+
           {/* Decorative elements */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 text-center w-3/4">
             <h2 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
@@ -140,7 +142,7 @@ const UserLoginPage = () => {
             <p className="text-white/90 text-xl md:text-2xl max-w-2xl mx-auto">
               Book the perfect studio space for your next creative project
             </p>
-            
+
             {/* SVG decorative elements */}
             <div className="absolute -top-40 -left-20 opacity-20">
               <svg width="150" height="150" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -168,21 +170,19 @@ const UserLoginPage = () => {
               <div className="bg-gray-100 rounded-full p-1 flex">
                 <button
                   onClick={() => setLoginMethod('login')}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    loginMethod === 'login'
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${loginMethod === 'login'
                     ? 'bg-[#2563EB] text-white'
                     : 'text-gray-600 hover:bg-gray-200'
-                  }`}
+                    }`}
                 >
                   Login
                 </button>
                 <button
                   onClick={() => setLoginMethod('register')}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    loginMethod === 'register'
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${loginMethod === 'register'
                     ? 'bg-[#2563EB] text-white'
                     : 'text-gray-600 hover:bg-gray-200'
-                  }`}
+                    }`}
                 >
                   Register
                 </button>
@@ -191,13 +191,13 @@ const UserLoginPage = () => {
 
             <div className="mb-8">
               <h2 className="text-xl lg:text-2xl font-semibold text-gray-800 mb-2">
-                {loginMethod === 'register' 
-                  ? 'Register with Phone Number' 
+                {loginMethod === 'register'
+                  ? 'Register with email'
                   : 'Welcome Back'}
               </h2>
               <p className="text-gray-600">
-                {loginMethod === 'register' 
-                  ? 'We will send a verification code to your phone'
+                {loginMethod === 'register'
+                  ? 'We will send a verification code to your email'
                   : 'Login with your username and password'}
               </p>
             </div>
@@ -207,14 +207,13 @@ const UserLoginPage = () => {
                 <div className="relative">
                   <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden focus-within:border-[#2563EB] transition-colors">
                     <span className="bg-gray-50 h-full px-4 py-3 text-gray-600 font-medium border-r-2 border-gray-200">
-                      +91
+                      📧
                     </span>
                     <input
-                      type="tel"
-                      maxLength="10"
-                      value={phoneNumber}
-                      onChange={handlePhoneNumberChange}
-                      placeholder="00000 00000"
+                      type="email"
+                      value={email}
+                      onChange={handleEmailChange}
+                      placeholder="you@example.com"
                       required
                       className="w-full px-4 py-3 text-gray-700 outline-none"
                     />
@@ -248,7 +247,7 @@ const UserLoginPage = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="relative">
                     <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden focus-within:border-[#2563EB] transition-colors">
                       <span className="bg-gray-50 h-full px-4 py-3 text-gray-600 font-medium border-r-2 border-gray-200">
@@ -332,7 +331,7 @@ const UserLoginPage = () => {
                     onClick={toggleLoginMethod}
                     className="text-[#2563EB] hover:underline text-sm font-medium"
                   >
-                    {loginMethod === 'login' 
+                    {loginMethod === 'login'
                       ? "Don't have an account? Register now"
                       : "Already registered? Login here"}
                   </button>
@@ -355,10 +354,10 @@ const UserLoginPage = () => {
             {/* Decorative element */}
             <div className="mt-16 flex justify-center opacity-70">
               <svg xmlns="http://www.w3.org/2000/svg" width="100" height="20" viewBox="0 0 100 20" fill="none">
-                <path d="M0 10C0 4.477 4.477 0 10 0H90C95.523 0 100 4.477 100 10C100 15.523 95.523 20 90 20H10C4.477 20 0 15.523 0 10Z" fill="#F3E8F3"/>
-                <circle cx="50" cy="10" r="6" fill="#2563EB" fillOpacity="0.3"/>
-                <circle cx="70" cy="10" r="4" fill="#2563EB" fillOpacity="0.2"/>
-                <circle cx="30" cy="10" r="4" fill="#2563EB" fillOpacity="0.2"/>
+                <path d="M0 10C0 4.477 4.477 0 10 0H90C95.523 0 100 4.477 100 10C100 15.523 95.523 20 90 20H10C4.477 20 0 15.523 0 10Z" fill="#F3E8F3" />
+                <circle cx="50" cy="10" r="6" fill="#2563EB" fillOpacity="0.3" />
+                <circle cx="70" cy="10" r="4" fill="#2563EB" fillOpacity="0.2" />
+                <circle cx="30" cy="10" r="4" fill="#2563EB" fillOpacity="0.2" />
               </svg>
             </div>
           </div>
