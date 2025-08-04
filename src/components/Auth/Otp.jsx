@@ -216,9 +216,9 @@ const OtpVerification = () => {
   const otpDigits = otpValue.padEnd(4, "").split("");
 
   return (
-    <>
+    <div className="">
       {/* Email and Password Setup Modal */}
-      {showEmailPasswordForm && (
+      {showEmailPasswordForm ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">
@@ -312,202 +312,201 @@ const OtpVerification = () => {
             </form>
           </div>
         </div>
-      )}
+      ) : (
+        <div
+          className={`flex min-h-screen w-full ${isPartnerLogin ? "flex-row-reverse" : "flex-row"
+            }`}
+        >
+          {/* Left side - Image */}
+          <div className="relative hidden md:block md:w-3/5 lg:w-2/3">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#892580]/90 to-[#892580]/40 z-10 mix-blend-multiply"></div>
+            <Image
+              src="/Assets/bok2.png"
+              alt="ALOKA"
+              layout="fill"
+              objectFit="cover"
+              priority
+              className="z-0"
+            />
 
-      <div
-        className={`flex min-h-screen w-full ${isPartnerLogin ? "flex-row-reverse" : "flex-row"
-          }`}
-      >
-        {/* Left side - Image */}
-        <div className="relative hidden md:block md:w-3/5 lg:w-2/3">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#892580]/90 to-[#892580]/40 z-10 mix-blend-multiply"></div>
-          <Image
-            src="/Assets/bok2.png"
-            alt="ALOKA"
-            layout="fill"
-            objectFit="cover"
-            priority
-            className="z-0"
-          />
-
-          {/* Decorative elements */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 text-center w-3/4">
-            <h2 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              {isPartnerLogin ? "Partner Verification" : "Verify Your Identity"}
-            </h2>
-            <p className="text-white/90 text-xl md:text-2xl max-w-2xl mx-auto">
-              {isPartnerLogin
-                ? "We're committed to keeping your business partnership secure"
-                : "We're committed to keeping your studio booking experience secure"
-              }
-            </p>
-          </div>
-        </div>
-
-        {/* Right side - OTP Form */}
-        <div className="w-full md:w-2/5 lg:w-1/3 bg-white p-6 md:p-10 lg:p-16 flex flex-col justify-center">
-          <div className="max-w-md mx-auto w-full">
-            {/* Logo and partner badge */}
-            <div className="flex items-center gap-3 mb-8">
-              <h1 className="text-3xl lg:text-4xl font-bold text-[#2563EB]">
-                SKL
-              </h1>
-              {isPartnerLogin && (
-                <span className="bg-[#2563EB] text-white px-4 py-1 rounded-full text-sm font-semibold">
-                  Partner
-                </span>
-              )}
-            </div>
-
-            <div className="mb-8">
-              <h2 className="text-xl lg:text-2xl font-semibold text-gray-800 mb-2">
-                Verify OTP
+            {/* Decorative elements */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 text-center w-3/4">
+              <h2 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                {isPartnerLogin ? "Partner Verification" : "Verify Your Identity"}
               </h2>
-              <p className="text-gray-600 mb-1">
-                Please enter the 4-digit code sent to
+              <p className="text-white/90 text-xl md:text-2xl max-w-2xl mx-auto">
+                {isPartnerLogin
+                  ? "We're committed to keeping your business partnership secure"
+                  : "We're committed to keeping your studio booking experience secure"
+                }
               </p>
-              <div className="flex items-center">
-                <p className="font-medium text-gray-800">{email}</p>
-                <button
-                  onClick={handleEditPhoneNumber}
-                  className="ml-3 text-[#2563EB] hover:text-[#2563EB]/80 font-medium text-sm underline focus:outline-none"
-                >
-                  Edit
-                </button>
-              </div>
             </div>
+          </div>
 
-            {/* OTP Input Section */}
-            <div className="space-y-6">
-              <div className="relative">
-                <input
-                  type="tel"
-                  inputMode="numeric"
-                  maxLength="4"
-                  value={otpValue}
-                  onChange={handleOtpChange}
-                  onFocus={() => setIsFocused(true)}
-                  onBlur={() => setIsFocused(false)}
-                  className="opacity-0 absolute inset-0 w-full h-full z-10 cursor-text"
-                  autoFocus
-                />
-
-                <div
-                  className={`flex justify-between space-x-4 ${isInvalid ? "shake-animation" : ""
-                    }`}
-                >
-                  {[0, 1, 2, 3].map((index) => (
-                    <div
-                      key={index}
-                      className={`relative w-full h-16 flex items-center justify-center text-2xl font-bold rounded-xl border-2 transition-all bg-gray-50
-                        ${isInvalid
-                          ? "border-red-300 bg-red-50"
-                          : otpValue.length === index && isFocused
-                            ? "border-[#2563EB] shadow-sm"
-                            : "border-gray-200"
-                        }`}
-                      onClick={() => {
-                        document.querySelector('input[type="tel"]').focus();
-                        setIsFocused(true);
-                      }}
-                    >
-                      {otpDigits[index]}
-
-                      {otpValue.length === index && isFocused && (
-                        <div className="h-8 w-0.5 bg-[#2563EB] animate-pulse ml-0.5"></div>
-                      )}
-                    </div>
-                  ))}
-                </div>
+          {/* Right side - OTP Form */}
+          <div className="w-full md:w-2/5 lg:w-1/3 bg-white p-6 md:p-10 lg:p-16 flex flex-col justify-center">
+            <div className="max-w-md mx-auto w-full">
+              {/* Logo and partner badge */}
+              <div className="flex items-center gap-3 mb-8">
+                <h1 className="text-3xl lg:text-4xl font-bold text-[#2563EB]">
+                  SKL
+                </h1>
+                {isPartnerLogin && (
+                  <span className="bg-[#2563EB] text-white px-4 py-1 rounded-full text-sm font-semibold">
+                    Partner
+                  </span>
+                )}
               </div>
 
-              {isInvalid && (
-                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 mr-2"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  Invalid OTP. Please try again.
-                </div>
-              )}
-
-              <div className="text-center">
-                <p className="text-gray-600 text-sm">
-                  Haven't received the code yet?
+              <div className="mb-8">
+                <h2 className="text-xl lg:text-2xl font-semibold text-gray-800 mb-2">
+                  Verify OTP
+                </h2>
+                <p className="text-gray-600 mb-1">
+                  Please enter the 4-digit code sent to
                 </p>
-                <button
-                  onClick={handleResendOtp}
-                  disabled={!canResend}
-                  className={`mt-2 text-sm font-medium focus:outline-none
-                    ${canResend
-                      ? "text-[#2563EB] hover:text-[#2563EB]/80"
-                      : "text-gray-400"
-                    }`}
-                >
-                  {canResend
-                    ? "Resend via SMS"
-                    : `Resend code in ${timer} seconds`}
-                </button>
+                <div className="flex items-center">
+                  <p className="font-medium text-gray-800">{email}</p>
+                  <button
+                    onClick={handleEditPhoneNumber}
+                    className="ml-3 text-[#2563EB] hover:text-[#2563EB]/80 font-medium text-sm underline focus:outline-none"
+                  >
+                    Edit
+                  </button>
+                </div>
               </div>
 
-              {isLoading && (
-                <div className="flex justify-center mt-4">
-                  <div className="loader">
-                    <div className="w-16 h-16 border-4 border-dashed rounded-full border-[#892580] animate-spin"></div>
+              {/* OTP Input Section */}
+              <div className="space-y-6">
+                <div className="relative">
+                  <input
+                    type="tel"
+                    inputMode="numeric"
+                    maxLength="4"
+                    value={otpValue}
+                    onChange={handleOtpChange}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    className="opacity-0 absolute inset-0 w-full h-full z-10 cursor-text"
+                    autoFocus
+                  />
+
+                  <div
+                    className={`flex justify-between space-x-4 ${isInvalid ? "shake-animation" : ""
+                      }`}
+                  >
+                    {[0, 1, 2, 3].map((index) => (
+                      <div
+                        key={index}
+                        className={`relative w-full h-16 flex items-center justify-center text-2xl font-bold rounded-xl border-2 transition-all bg-gray-50
+                        ${isInvalid
+                            ? "border-red-300 bg-red-50"
+                            : otpValue.length === index && isFocused
+                              ? "border-[#2563EB] shadow-sm"
+                              : "border-gray-200"
+                          }`}
+                        onClick={() => {
+                          document.querySelector('input[type="tel"]').focus();
+                          setIsFocused(true);
+                        }}
+                      >
+                        {otpDigits[index]}
+
+                        {otpValue.length === index && isFocused && (
+                          <div className="h-8 w-0.5 bg-[#2563EB] animate-pulse ml-0.5"></div>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
-              )}
-            </div>
 
-            {/* Decorative element */}
-            <div className="mt-16 flex justify-center opacity-70">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="100"
-                height="20"
-                viewBox="0 0 100 20"
-                fill="none"
-              >
-                <path
-                  d="M0 10C0 4.477 4.477 0 10 0H90C95.523 0 100 4.477 100 10C100 15.523 95.523 20 90 20H10C4.477 20 0 15.523 0 10Z"
-                  fill="#F3E8F3"
-                />
-                <circle
-                  cx="50"
-                  cy="10"
-                  r="6"
-                  fill="#892580"
-                  fillOpacity="0.3"
-                />
-                <circle
-                  cx="70"
-                  cy="10"
-                  r="4"
-                  fill="#892580"
-                  fillOpacity="0.2"
-                />
-                <circle
-                  cx="30"
-                  cy="10"
-                  r="4"
-                  fill="#892580"
-                  fillOpacity="0.2"
-                />
-              </svg>
+                {isInvalid && (
+                  <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 mr-2"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    Invalid OTP. Please try again.
+                  </div>
+                )}
+
+                <div className="text-center">
+                  <p className="text-gray-600 text-sm">
+                    Haven't received the code yet?
+                  </p>
+                  <button
+                    onClick={handleResendOtp}
+                    disabled={!canResend}
+                    className={`mt-2 text-sm font-medium focus:outline-none
+                    ${canResend
+                        ? "text-[#2563EB] hover:text-[#2563EB]/80"
+                        : "text-gray-400"
+                      }`}
+                  >
+                    {canResend
+                      ? "Resend via SMS"
+                      : `Resend code in ${timer} seconds`}
+                  </button>
+                </div>
+
+                {isLoading && (
+                  <div className="flex justify-center mt-4">
+                    <div className="loader">
+                      <div className="w-16 h-16 border-4 border-dashed rounded-full border-[#892580] animate-spin"></div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Decorative element */}
+              <div className="mt-16 flex justify-center opacity-70">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="100"
+                  height="20"
+                  viewBox="0 0 100 20"
+                  fill="none"
+                >
+                  <path
+                    d="M0 10C0 4.477 4.477 0 10 0H90C95.523 0 100 4.477 100 10C100 15.523 95.523 20 90 20H10C4.477 20 0 15.523 0 10Z"
+                    fill="#F3E8F3"
+                  />
+                  <circle
+                    cx="50"
+                    cy="10"
+                    r="6"
+                    fill="#892580"
+                    fillOpacity="0.3"
+                  />
+                  <circle
+                    cx="70"
+                    cy="10"
+                    r="4"
+                    fill="#892580"
+                    fillOpacity="0.2"
+                  />
+                  <circle
+                    cx="30"
+                    cy="10"
+                    r="4"
+                    fill="#892580"
+                    fillOpacity="0.2"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Add CSS for shake animation */}
-        <style jsx>{`
+          {/* Add CSS for shake animation */}
+          <style jsx>{`
           @keyframes shake {
             0%,
             100% {
@@ -531,8 +530,10 @@ const OtpVerification = () => {
             animation: shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
           }
         `}</style>
-      </div>
-    </>
+        </div>
+      )}
+
+    </div>
   );
 };
 
