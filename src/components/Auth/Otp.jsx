@@ -45,7 +45,6 @@ const OtpVerification = () => {
 
   const mutation = useMutation({
     mutationFn: async (otpString) => {
-      console.log("Mutation function called with:", otpString); // Debug log
       setIsLoading(true);
       try {
         const response = await verifyOTP(email, otpString);
@@ -56,7 +55,6 @@ const OtpVerification = () => {
       }
     },
     onSuccess: (data) => {
-      console.log("Mutation success:", data);
       if (data.success) {
         const authData = JSON.parse(localStorage.getItem("auth") || "{}");
         authData.token = data.token;
@@ -66,29 +64,30 @@ const OtpVerification = () => {
         setIsInvalid(false);
         setUserData(data);
 
-        if (data.user.mobile) {
-          setShowEmailPasswordForm(false);
-          dispatch(
-            setUser({
-              token: data.token,
-              user: data.user,
-              role: data.role,
-            })
-          );
+        // ✅ CASE 1: Normal user with no mobile → show setup form
+        if (!data.user.mobile && !isPartnerLogin) {
+          setShowEmailPasswordForm(true);
+          return;
+        }
 
-          // Route based on user type
-          if (isPartnerLogin) {
-            if (!data.isBusinessUser) {
-              // Redirect to partner onboarding page
-              router.push("/partner/onboarding");
-            } else {
-              router.push("/partner/dashboard");
-            }
+        // ✅ CASE 2: Partner without mobile → allow login and redirect
+        // ✅ CASE 3: Anyone with mobile → allow login and redirect
+        dispatch(
+          setUser({
+            token: data.token,
+            user: data.user,
+            role: data.role,
+          })
+        );
+
+        if (isPartnerLogin) {
+          if (!data.isBusinessUser) {
+            router.push("/partner/onboarding");
           } else {
-            router.push("/");
+            router.push("/partner/dashboard");
           }
         } else {
-          setShowEmailPasswordForm(true);
+          router.push("/");
         }
       } else {
         showToast("Invalid OTP, please try again.", "error");
@@ -165,7 +164,7 @@ const OtpVerification = () => {
 
       const response = await axios.post(
         `${BASE_URL}/auth/update-credentials`,
-        { mobile:phone, password },
+        { mobile: phone, password },
         {
           headers: {
             Authorization: `Bearer ${token}`,
