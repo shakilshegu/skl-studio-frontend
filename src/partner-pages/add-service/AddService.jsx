@@ -22,7 +22,7 @@ const AddService = () => {
 
   // Query to fetch services with error handling
   const {
-    data: services ,
+    data: services,
     isLoading,
     isError,
     error,
@@ -247,10 +247,30 @@ const AddService = () => {
       );
     }
 
-    if (services?.data?.length > 0) {
+    if (isError) {
+      // Extract the error message
+      const message = getErrorMessage(error);
+
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.data.map((service) => (
+        <div className="flex flex-col items-center justify-center h-64 text-red-500">
+          <AlertCircle className="w-12 h-12 mb-4" />
+          <p className="text-center">{message}</p>
+          <button
+            onClick={() =>
+              queryClient.invalidateQueries({ queryKey: ["services"] })
+            }
+            className="mt-4 px-4 py-2 bg-[#892580] text-white rounded-xl hover:bg-[#6d1d66] flex items-center gap-2"
+          >
+            <RefreshCw className="w-4 h-4" /> Try Again
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="text-center  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-6">
+        {services?.data?.length > 0 ? (
+          services?.data?.map((service) => (
             <div
               key={service?._id}
               className="bg-white rounded-xl shadow transition relative"
@@ -299,32 +319,27 @@ const AddService = () => {
                 )}
               </div>
             </div>
-          ))}
-        </div>
-      );
-    }
-
-    // Empty state - centered
-    return (
-      <div className="flex justify-center items-center min-h-64">
-        <div className="text-center  py-10 px-8 rounded-lg">
-          <ImageIcon className="mx-auto h-12 w-12 text-gray-400" />
-          <h3 className="mt-2 text-lg font-medium text-gray-900">
-            No services found
-          </h3>
-          <p className="mt-1 text-gray-500">
-            Get started by adding some services.
-          </p>
-          <div className="mt-6">
-            <button
-              onClick={handleOpenAddModal}
-              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#892580] hover:bg-[#6d1d66]"
-            >
-              <Plus className="w-5 h-5 mr-2" />
-              Add Service
-            </button>
+          ))
+        ) : (
+          <div className="text-center py-10 col-span-3">
+            <ImageIcon className="mx-auto h-12 w-12 text-gray-400" />
+            <h3 className="mt-2 text-lg font-medium text-gray-900">
+              No services found
+            </h3>
+            <p className="mt-1 text-gray-500">
+              Get started by adding some services.
+            </p>
+            <div className="mt-6">
+              <button
+                onClick={handleOpenAddModal}
+                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#892580] hover:bg-[#6d1d66]"
+              >
+                <Plus className="w-5 h-5 mr-2" />
+                Add Service
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   };
@@ -359,7 +374,7 @@ const AddService = () => {
         </button>
       </div>
 
-      {renderContent()}
+        {renderContent()}
       
       {/* Combined Add/Edit Modal */}
       {serviceModal.isOpen && (

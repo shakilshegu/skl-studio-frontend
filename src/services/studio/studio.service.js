@@ -51,7 +51,7 @@ export const getStudioById = async (id) => {
 }
 export const  getStudioCategories = async () => {
   try {
-    const response = await axiosInstance(`/admin/studio-category/`);
+    const response = await axiosInstance(`/user/studio/categories`);
     return response.data;
   } catch (error) {
     throw new Error('Error fetching studio details');
@@ -89,6 +89,18 @@ export const getStudioHelpers = async (id) => {
   try {
     
     const response = await axiosInstance.get(`/user/studio/${id}/helpers`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error fetching studio details');
+  }
+}
+export const fetchSimilarStudios = async (id) => {
+  try {
+    
+    const response = await axiosInstance.get(`/user/studio/similar-studio/${id}`);
+    console.log("response response ",response );
+    
     return response.data;
   } catch (error) {
     console.error(error);

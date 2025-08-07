@@ -28,8 +28,8 @@ const PackageDetailsPage = ({ adminPackageId }) => {
   // Essential photography package info
   const packageInfo = {
     ...data,
-    rating: 4.9,
-    reviews: 248,
+    rating: 0,
+    reviews: 0,
     features: [
       "Professional photographer with 8+ years experience",
       "High-end DSLR cameras and lenses",
@@ -59,7 +59,7 @@ const PackageDetailsPage = ({ adminPackageId }) => {
           {/* Back Button */}
           <button
             onClick={handleBack}
-            className="flex items-center gap-2 text-gray-600 hover:text-[#2563EB] mb-4 transition-colors group"
+            className="flex items-center gap-2 text-gray-600 hover:text-[#892580] mb-4 transition-colors group"
           >
             <ChevronLeft
               size={20}
@@ -73,8 +73,8 @@ const PackageDetailsPage = ({ adminPackageId }) => {
             {/* Left Side - Package Info */}
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-3">
-                <div className="px-3 py-1 bg-[#2563EB]/10 text-[#2563EB] rounded-full text-sm font-medium">
-                  SKL Package
+                <div className="px-3 py-1 bg-[#892580]/10 text-[#892580] rounded-full text-sm font-medium">
+                  Aloka Package
                 </div>
                 {packageInfo.eventCategory && (
                   <div className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm">
@@ -113,7 +113,7 @@ const PackageDetailsPage = ({ adminPackageId }) => {
                 {/* Price Display */}
                 <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
                   <div className="text-right">
-                    <div className="text-4xl font-bold text-[#2563EB] mb-1">
+                    <div className="text-4xl font-bold text-[#892580] mb-1">
                       {formatPrice(packageInfo.price)}
                     </div>
                     <div className="text-sm text-gray-500 font-medium">
@@ -154,8 +154,8 @@ const PackageDetailsPage = ({ adminPackageId }) => {
             {/* Package Description */}
             <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-[#2563EB]/10 rounded-xl flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-[#2563EB]" />
+                <div className="w-12 h-12 bg-[#892580]/10 rounded-xl flex items-center justify-center">
+                  <Zap className="w-6 h-6 text-[#892580]" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">

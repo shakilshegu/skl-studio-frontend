@@ -1,17 +1,14 @@
 'use client'
 import { useEffect, useState } from "react";
 import { 
-  XCircle,
-  AlertCircle,
-  CheckCircle,
-  Send,
-  FileText,
-  Upload,
   X,
-  Camera,
-  Receipt
+  Send,
+  AlertCircle,
+  FileText,
+  Upload
 } from "lucide-react";
 import { useCreateTicket } from "../../hooks/useSupportQueries";
+import { showToast } from "../Toast/Toast";
 
 const RaiseTicketModal = ({ 
   isOpen, 
@@ -30,7 +27,7 @@ const RaiseTicketModal = ({
   // TanStack Query mutation for creating ticket
   const createTicketMutation = useCreateTicket();
 
-  // Reset form when modal opens/closes
+  // Reset form when modal opens
   useEffect(() => {
     if (isOpen) {
       setTicketData({
@@ -43,7 +40,6 @@ const RaiseTicketModal = ({
     }
   }, [isOpen]);
 
-  // Handle form input changes
   const handleInputChange = (field, value) => {
     setTicketData(prev => ({
       ...prev,
@@ -51,11 +47,9 @@ const RaiseTicketModal = ({
     }));
   };
 
-  // Handle file attachment
   const handleFileAttachment = (event) => {
     const files = Array.from(event.target.files);
     const validFiles = files.filter(file => {
-      // Limit file size to 5MB and check file types
       const maxSize = 5 * 1024 * 1024; // 5MB
       const allowedTypes = [
         'image/jpeg', 'image/png', 'image/gif', 'image/webp',
@@ -65,7 +59,7 @@ const RaiseTicketModal = ({
     });
     
     if (validFiles.length !== files.length) {
-      showToast('Some files were skipped. Please ensure files are under 5MB and are of supported formats (images, PDF, text, or Word documents).',"error");
+      showToast('Some files were skipped. Please ensure files are under 5MB and are of supported formats (images, PDF, text, or Word documents).', "error");
     }
     
     setTicketData(prev => ({
@@ -73,11 +67,9 @@ const RaiseTicketModal = ({
       attachments: [...prev.attachments, ...validFiles]
     }));
     
-    // Reset file input
     event.target.value = '';
   };
 
-  // Remove attachment
   const removeAttachment = (index) => {
     setTicketData(prev => ({
       ...prev,
@@ -85,19 +77,18 @@ const RaiseTicketModal = ({
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async () => {
     // Validation
     if (!ticketData.category) {
-      showToast('Please select a category',"error");
+      showToast('Please select a category', "error");
       return;
     }
     if (!ticketData.subject.trim()) {
-      showToast('Please enter a subject',"error");
+      showToast('Please enter a subject', "error");
       return;
     }
     if (!ticketData.description.trim()) {
-      showToast('Please enter a description',"error");
+      showToast('Please enter a description', "error");
       return;
     }
 
@@ -111,15 +102,15 @@ const RaiseTicketModal = ({
     };
 
     // Add booking ID if booking exists
-    if (booking?._id) {
-      submitData.bookingId = booking._id;
+    if (booking?._id || booking?.customBookingId) {
+      submitData.bookingId = booking._id || booking.customBookingId;
     }
 
     // Submit using TanStack Query mutation
     createTicketMutation.mutate(submitData, {
       onSuccess: (response) => {
         // Show success message
-        alert('Support ticket created successfully!');
+        showToast('Support ticket created successfully!', 'success');
         
         // Call the success callback if provided
         if (onTicketCreated) {
@@ -136,12 +127,11 @@ const RaiseTicketModal = ({
         const errorMessage = error.response?.data?.message || 
                             error.message || 
                             'Failed to submit ticket. Please try again.';
-        alert(errorMessage);
+        showToast(errorMessage, 'error');
       }
     });
   };
 
-  // Format currency
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -150,16 +140,6 @@ const RaiseTicketModal = ({
     }).format(amount);
   };
 
-  // Format file size
-  const formatFileSize = (bytes) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  };
-
-  // Updated ticket categories to match backend enum
   const ticketCategories = [
     { value: 'booking', label: 'Booking Issue' },
     { value: 'billing', label: 'Payment/Billing Problem' },
@@ -167,12 +147,10 @@ const RaiseTicketModal = ({
     { value: 'general', label: 'General Inquiry' }
   ];
 
-  // Priority levels
   const priorityLevels = [
-    { value: 'low', label: 'Low', color: 'text-green-600', bgColor: 'bg-green-100', description: 'General inquiry or minor issue' },
-    { value: 'medium', label: 'Medium', color: 'text-yellow-600', bgColor: 'bg-yellow-100', description: 'Standard support request' },
-    { value: 'high', label: 'High', color: 'text-orange-600', bgColor: 'bg-orange-100', description: 'Important issue affecting service' },
-    { value: 'urgent', label: 'Urgent', color: 'text-red-600', bgColor: 'bg-red-100', description: 'Critical issue requiring immediate attention' }
+    { value: 'low', label: 'Low' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'high', label: 'High' }
   ];
 
   if (!isOpen) return null;
@@ -181,120 +159,82 @@ const RaiseTicketModal = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-hidden">
-        {/* Modal Header */}
-        <div className="p-6 border-b border-gray-200 bg-blue-50">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                <FileText className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900">Raise Support Ticket</h3>
-                <p className="text-sm text-gray-600">Get help with your booking</p>
-              </div>
-            </div>
+      <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 max-h-[90vh] flex flex-col">
+        {/* Header */}
+        <div className="p-4 border-b border-gray-200 flex-shrink-0">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-900">Support Ticket</h3>
             <button
               onClick={onClose}
               disabled={isSubmitting}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
+              className="p-1 hover:bg-gray-100 rounded"
             >
-              <XCircle className="w-6 h-6 text-gray-500" />
+              <X className="w-5 h-5 text-gray-500" />
             </button>
           </div>
           
-          {/* Booking Info */}
+          {/* Booking Info - Compact */}
           {booking && (
-            <div className="bg-white rounded-xl p-4 border border-blue-200">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
-                  {booking?.entityDetails?.image ? (
-                    <img
-                      src={booking.entityDetails.image}
-                      alt={booking.entityDetails.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-400 to-purple-600">
-                      <Camera className="w-6 h-6 text-white" />
-                    </div>
-                  )}
+            <div className="mt-3 p-3 bg-blue-50 rounded-lg">
+              <div className="text-sm">
+                <div className="font-medium text-gray-900">
+                  {booking.packageId ? "Aloka Package" : booking?.entityDetails?.name || "Photography Booking"}
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-1">
-                    <h4 className="font-semibold text-gray-900">
-                      {booking.packageId ? "SKL Package" : booking?.entityDetails?.name}
-                    </h4>
-                    <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-md text-xs font-medium">
-                      {booking.status?.toUpperCase()}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-4 text-sm text-gray-600">
-                    <div className="flex items-center gap-1">
-                      <Receipt className="w-4 h-4" />
-                      <span className="font-mono">{booking.customBookingId}</span>
-                    </div>
-                    <div>
-                      Total: <span className="font-semibold">{formatCurrency(booking.paymentSummary?.totalAmount || booking.totalAmount)}</span>
-                    </div>
-                  </div>
+                <div className="text-gray-600 mt-1">
+                  ID: {booking.customBookingId || booking._id} • {formatCurrency(booking.totalAmount || booking.paymentSummary?.totalAmount || 0)}
                 </div>
+                {booking.status && (
+                  <span className="inline-block mt-1 px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">
+                    {booking.status.toUpperCase()}
+                  </span>
+                )}
               </div>
             </div>
           )}
         </div>
 
-        {/* Modal Body */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
-          <div className="space-y-6">
-            {/* Category Selection */}
+        {/* Body */}
+        <div className="p-4 overflow-y-auto flex-1">
+          <div className="space-y-4">
+            {/* Category */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-3">
-                Issue Category <span className="text-red-500">*</span>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Issue Type <span className="text-red-500">*</span>
               </label>
-              <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
+              <select
+                value={ticketData.category}
+                onChange={(e) => handleInputChange('category', e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                disabled={isSubmitting}
+              >
+                <option value="">Select issue type</option>
                 {ticketCategories.map((category) => (
-                  <button
-                    key={category.value}
-                    type="button"
-                    onClick={() => handleInputChange('category', category.value)}
-                    disabled={isSubmitting}
-                    className={`p-3 text-left border-2 rounded-xl transition-all duration-200 disabled:opacity-50 ${
-                      ticketData.category === category.value
-                        ? 'border-blue-500 bg-blue-50 text-blue-700'
-                        : 'border-gray-200 hover:border-gray-300 text-gray-700'
-                    }`}
-                  >
-                    <div className="font-medium text-sm">{category.label}</div>
-                  </button>
+                  <option key={category.value} value={category.value}>
+                    {category.label}
+                  </option>
                 ))}
-              </div>
+              </select>
             </div>
 
-            {/* Priority Selection */}
+            {/* Priority */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-3">
-                Priority Level <span className="text-red-500">*</span>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Priority
               </label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="flex gap-2">
                 {priorityLevels.map((priority) => (
                   <button
                     key={priority.value}
                     type="button"
                     onClick={() => handleInputChange('priority', priority.value)}
                     disabled={isSubmitting}
-                    className={`p-4 text-left border-2 rounded-xl transition-all duration-200 disabled:opacity-50 ${
+                    className={`px-3 py-1 text-sm rounded-md border ${
                       ticketData.priority === priority.value
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        ? 'bg-blue-500 text-white border-blue-500'
+                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
                     }`}
                   >
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className={`px-2 py-1 rounded-md text-xs font-medium ${priority.bgColor} ${priority.color}`}>
-                        {priority.label}
-                      </span>
-                    </div>
-                    <div className="text-sm text-gray-600">{priority.description}</div>
+                    {priority.label}
                   </button>
                 ))}
               </div>
@@ -302,34 +242,31 @@ const RaiseTicketModal = ({
 
             {/* Subject */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Subject <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 value={ticketData.subject}
                 onChange={(e) => handleInputChange('subject', e.target.value)}
-                placeholder="Brief summary of your issue"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all disabled:opacity-50 disabled:bg-gray-50"
+                placeholder="Brief description of your issue"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 disabled={isSubmitting}
                 maxLength={200}
               />
-              <div className="mt-1 text-xs text-gray-500">
-                {ticketData.subject.length}/200 characters
-              </div>
             </div>
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Description <span className="text-red-500">*</span>
               </label>
               <textarea
                 value={ticketData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
-                placeholder="Please provide detailed information about your issue. Include any relevant dates, times, or specific problems you're experiencing."
-                rows={6}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all resize-none disabled:opacity-50 disabled:bg-gray-50"
+                placeholder="Please describe your issue in detail..."
+                rows={4}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
                 disabled={isSubmitting}
                 maxLength={1000}
               />
@@ -338,12 +275,12 @@ const RaiseTicketModal = ({
               </div>
             </div>
 
-            {/* File Attachments */}
+            {/* File Upload */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Attachments (Optional)
               </label>
-              <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-gray-400 transition-colors">
+              <div className="flex items-center gap-2">
                 <input
                   type="file"
                   multiple
@@ -355,46 +292,34 @@ const RaiseTicketModal = ({
                 />
                 <label
                   htmlFor="file-upload"
-                  className={`cursor-pointer flex flex-col items-center gap-2 ${isSubmitting ? 'pointer-events-none opacity-50' : ''}`}
+                  className="cursor-pointer flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50 text-sm text-gray-700"
                 >
-                  <Upload className="w-8 h-8 text-gray-400" />
-                  <div className="text-sm font-medium text-gray-700">
-                    Click to upload files
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    Images, PDF, Text, or Word documents (Max 5MB each)
-                  </div>
+                  <Upload className="w-4 h-4" />
+                  Attach files
                 </label>
+                <span className="text-xs text-gray-500">Images, PDF (Max 5MB)</span>
               </div>
 
               {/* Attached Files */}
               {ticketData.attachments.length > 0 && (
-                <div className="mt-4 space-y-2">
-                  <div className="text-sm font-medium text-gray-700">
-                    Attached Files ({ticketData.attachments.length})
-                  </div>
+                <div className="mt-2 space-y-2">
                   {ticketData.attachments.map((file, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border"
+                      className="flex items-center justify-between p-2 bg-gray-50 rounded-md"
                     >
-                      <div className="flex items-center gap-3">
-                        <FileText className="w-5 h-5 text-gray-400" />
-                        <div>
-                          <div className="text-sm font-medium text-gray-900 truncate max-w-xs">
-                            {file.name}
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            {formatFileSize(file.size)}
-                          </div>
-                        </div>
+                      <div className="flex items-center gap-2">
+                        <FileText className="w-4 h-4 text-gray-400" />
+                        <span className="text-sm text-gray-700 truncate">
+                          {file.name}
+                        </span>
                       </div>
                       <button
                         onClick={() => removeAttachment(index)}
                         disabled={isSubmitting}
-                        className="p-1 hover:bg-gray-200 rounded transition-colors disabled:opacity-50"
+                        className="text-red-500 hover:text-red-700"
                       >
-                        <X className="w-4 h-4 text-gray-500" />
+                        <X className="w-4 h-4" />
                       </button>
                     </div>
                   ))}
@@ -402,29 +327,24 @@ const RaiseTicketModal = ({
               )}
             </div>
 
-            {/* Form Validation Messages */}
+            {/* Validation Warning */}
             {(!ticketData.category || !ticketData.subject.trim() || !ticketData.description.trim()) && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3">
                 <div className="flex items-center gap-2 text-yellow-800">
-                  <AlertCircle className="w-5 h-5" />
-                  <span className="font-medium">Please complete all required fields</span>
+                  <AlertCircle className="w-4 h-4" />
+                  <span className="text-sm">Please fill in all required fields</span>
                 </div>
-                <ul className="mt-2 text-sm text-yellow-700 list-disc list-inside space-y-1">
-                  {!ticketData.category && <li>Select an issue category</li>}
-                  {!ticketData.subject.trim() && <li>Enter a subject</li>}
-                  {!ticketData.description.trim() && <li>Provide a description</li>}
-                </ul>
               </div>
             )}
 
             {/* Error Message */}
             {createTicketMutation.isError && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <div className="bg-red-50 border border-red-200 rounded-md p-3">
                 <div className="flex items-center gap-2 text-red-800">
-                  <XCircle className="w-5 h-5" />
-                  <span className="font-medium">Error creating ticket</span>
+                  <AlertCircle className="w-4 h-4" />
+                  <span className="text-sm font-medium">Error creating ticket</span>
                 </div>
-                <p className="mt-1 text-sm text-red-700">
+                <p className="mt-1 text-xs text-red-700">
                   {createTicketMutation.error?.response?.data?.message || 
                    createTicketMutation.error?.message || 
                    'An unexpected error occurred. Please try again.'}
@@ -434,24 +354,20 @@ const RaiseTicketModal = ({
           </div>
         </div>
 
-        {/* Modal Footer */}
-        <div className="p-6 border-t border-gray-200 bg-gray-50">
-          <div className="flex gap-3 justify-end">
+        {/* Footer - Always visible */}
+        <div className="p-4 border-t border-gray-200 bg-gray-50 flex-shrink-0">
+          <div className="flex gap-3">
             <button
               onClick={onClose}
               disabled={isSubmitting}
-              className="px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors font-medium disabled:opacity-50"
+              className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               onClick={handleSubmit}
-              disabled={isSubmitting || !ticketData.category || !ticketData.subject.trim() || !ticketData.description.trim()}
-              className={`px-6 py-3 rounded-xl font-medium transition-colors flex items-center gap-2 ${
-                isSubmitting || !ticketData.category || !ticketData.subject.trim() || !ticketData.description.trim()
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  : 'bg-blue-500 text-white hover:bg-blue-600'
-              }`}
+              disabled={isSubmitting}
+              className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>
@@ -466,10 +382,8 @@ const RaiseTicketModal = ({
               )}
             </button>
           </div>
-          
-          {/* Help Text */}
-          <div className="mt-4 text-xs text-gray-500 text-center">
-            We typically respond to tickets within 24 hours. You'll receive updates via email.
+          <div className="mt-2 text-xs text-gray-500 text-center">
+            We'll respond within 24 hours
           </div>
         </div>
       </div>

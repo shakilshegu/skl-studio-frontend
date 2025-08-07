@@ -25,12 +25,12 @@ import ServicesSection from "../../components/studio/ServicesSection";
 import PackagesSection from "../../components/studio/PackagesSection";
 import EquipmentSection from "../../components/Equipment/EquipmentSection";
 import HelpersSection from "../../components/studio/Helpers";
-import Portfolio from "./Portfolio";
 import CalendarAvailability from "@/components/Calender/CalendarAvailability";
 import { getFreelancerById } from "@/services/Freelancer/freelancer.service";
 import { useEntityReview } from "@/hooks/useMediaQueries";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAllBookingData, clearBookings, setEntityId } from "@/stores/bookingSlice";
+import Portfolio from "../studio/Portfolio";
 
 
 const FreelancerDetails = ({
@@ -51,6 +51,7 @@ const FreelancerDetails = ({
     retry: 3,
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
+console.log("initialdata",initialData);
 
     const [page, setPage] = useState(1);
    const { data: reviews, isLoading } = useEntityReview(entityType, entityId, page); 
@@ -295,8 +296,8 @@ const FreelancerDetails = ({
             </section>
 
             {/* Portfolio */}
-            <section className="bg-white rounded-xl border border-gray-200 p-6">
-              <Portfolio partnerId={freelancerId} />
+                <section className="bg-white rounded-xl border border-gray-200 p-6">
+              <Portfolio partnerId={initialData?.user}/>
             </section>
 
             {/* Reviews */}

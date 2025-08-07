@@ -55,3 +55,13 @@ export const fetchTopRatedStudios = async ({ categoryId }) => {
     throw error;
   }
 };
+
+
+export const fetchTestimonials = async () => {
+  try {
+    const response = await axiosInstance.get(`/admin/testimonial`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Error fetching testimonials');
+  }
+};

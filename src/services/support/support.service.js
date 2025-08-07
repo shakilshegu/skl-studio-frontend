@@ -22,6 +22,16 @@ export const getTicketById = async (ticketId) => {
     throw error;
   }
 };
+export const getTicketByBookingId = async (bookingId) => {
+  try {
+    const response = await axiosInstance.get(`/support/booking/${bookingId}/tickets`);
+    console.log("Ticket Data:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching ticket:", error);
+    throw error;
+  }
+};
 
 export const createTicket = async (ticketData) => {
   try {

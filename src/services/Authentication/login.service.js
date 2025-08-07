@@ -18,9 +18,9 @@ export const loginWithCredentials = async (username, password,   isPartnerLogin)
 
 
 
-export const sendOTP = async (email) => {
+export const sendOTP = async (phoneNumber) => {
     try {
-        const response = await axiosInstance.post('/auth/send-otp', { email});
+        const response = await axiosInstance.post('/auth/send-otp', { mobileNumber: phoneNumber });
         return response.data;
     } catch (error) {
         const errorMessage = error.response?.data?.error || error.message || 'Failed to login';
@@ -29,11 +29,9 @@ export const sendOTP = async (email) => {
     }
 };
 
-export const verifyOTP = async (email, otp) => {
-  console.log("Sending verifyOTP payload:", { email,otp });
-
+export const verifyOTP = async (phoneNumber, otp) => {
     try {
-        const response = await axiosInstance.post('/auth/verify-otp', {email, otpCode: otp });
+        const response = await axiosInstance.post('/auth/verify-otp', { mobileNumber: phoneNumber, otpCode: otp });
         return response.data;
 
     } catch (error) {

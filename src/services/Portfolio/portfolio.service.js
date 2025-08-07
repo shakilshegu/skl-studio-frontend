@@ -64,3 +64,15 @@ export const deletePortfolio = async (id) => {
     throw error;
   }
 };
+
+
+
+export const getPortfolioByPartnerId = async (userId) => {
+  try {
+    const response = await axiosInstance.get(`/partner/portfolio/partner/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching portfolio:", error);
+    throw error;
+  }
+};

@@ -58,6 +58,7 @@ const PrevArrow = ({ onClick }) => (
 
 const StudioDetails = ({ studioId, initialData, entityType, entityId }) => {
   const [page, setPage] = useState(1);
+  console.log("initialdata",initialData);
 
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
@@ -95,6 +96,8 @@ const StudioDetails = ({ studioId, initialData, entityType, entityId }) => {
 
   // Extract studio data from response
   const studio = studioResponse?.studio || studioResponse || initialData;
+  console.log("studio ",studio );
+  
 
   const sliderSettings = {
     dots: true,
@@ -304,7 +307,7 @@ const StudioDetails = ({ studioId, initialData, entityType, entityId }) => {
 
             {/* Portfolio */}
             <section className="bg-white rounded-xl border border-gray-200 p-6">
-              <Portfolio studioId={studioId} />
+              <Portfolio partnerId={initialData?.owner?.userId}/>
             </section>
 
             {/* Reviews */}
@@ -321,7 +324,7 @@ const StudioDetails = ({ studioId, initialData, entityType, entityId }) => {
             {/* Similar Spaces */}
             <section className="bg-white rounded-xl border border-gray-200 p-6">
               <SimilarSpaces
-                categoryId={studio?.category?._id || studio?.type}
+                categoryId={studio?.category}
               />
             </section>
           </div>

@@ -1,3 +1,5 @@
+
+
 import { useState, useEffect } from "react";
 import {
   ArrowLeft,
@@ -493,7 +495,7 @@ const ContentDetailsForm = ({
     return (
       <div className="p-8 bg-white rounded-2xl shadow-xl">
         <div className="text-center py-12">
-          <Loader2 className="h-12 w-12 animate-spin mx-auto mb-6 text-[#2563EB]" />
+          <Loader2 className="h-12 w-12 animate-spin mx-auto mb-6 text-[#892580]" />
           <h3 className="text-xl font-semibold text-gray-700 mb-2">
             Loading...
           </h3>
@@ -612,7 +614,7 @@ const ContentDetailsForm = ({
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-6">
-            <div className="bg-gradient-to-r from-[#2563EB] to-purple-700 px-8 py-6">
+            <div className="bg-gradient-to-r from-[#892580] to-purple-700 px-8 py-6">
               <div className="flex items-center space-x-4">
                 <div className="bg-white/20 p-3 rounded-xl">
                   <Award className="h-8 w-8 text-white" />
@@ -694,7 +696,7 @@ const ContentDetailsForm = ({
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <MessageCircle className="h-6 w-6 text-[#2563EB]" />
+                    <MessageCircle className="h-6 w-6 text-[#892580]" />
                     <h2 className="text-2xl font-bold text-gray-800">
                       Your Review
                     </h2>
@@ -729,7 +731,7 @@ const ContentDetailsForm = ({
                           />
                         ))}
                       </div>
-                      <span className="text-lg font-semibold text-[#2563EB]">
+                      <span className="text-lg font-semibold text-[#892580]">
                         {getRatingText(existingReview.review.rating)}
                       </span>
                       <span className="text-gray-500">
@@ -822,7 +824,7 @@ const ContentDetailsForm = ({
                 {/* Rating Section */}
                 <div className="text-center space-y-4">
                   <div className="flex items-center justify-center space-x-3 mb-4">
-                    <MessageCircle className="h-6 w-6 text-[#2563EB]" />
+                    <MessageCircle className="h-6 w-6 text-[#892580]" />
                     <h2 className="text-2xl font-bold text-gray-800">
                       {isReviewEditMode
                         ? "Update your rating"
@@ -853,7 +855,7 @@ const ContentDetailsForm = ({
                   </div>
 
                   {(hover || reviewData.rating) > 0 && (
-                    <p className="text-lg font-medium text-[#2563EB] animate-fade-in">
+                    <p className="text-lg font-medium text-[#892580] animate-fade-in">
                       {getRatingText(hover || reviewData.rating)}
                     </p>
                   )}
@@ -886,7 +888,7 @@ const ContentDetailsForm = ({
                       className={`w-full px-4 py-4 text-lg border-2 rounded-xl focus:outline-none transition-colors ${
                         reviewErrors.title
                           ? "border-red-300 focus:border-red-500 bg-red-50"
-                          : "border-gray-200 focus:border-[#2563EB] focus:bg-purple-50"
+                          : "border-gray-200 focus:border-[#892580] focus:bg-purple-50"
                       }`}
                       maxLength={100}
                     />
@@ -922,7 +924,7 @@ const ContentDetailsForm = ({
                       className={`w-full px-4 py-4 text-lg border-2 rounded-xl resize-none focus:outline-none transition-colors ${
                         reviewErrors.review
                           ? "border-red-300 focus:border-red-500 bg-red-50"
-                          : "border-gray-200 focus:border-[#2563EB] focus:bg-purple-50"
+                          : "border-gray-200 focus:border-[#892580] focus:bg-purple-50"
                       }`}
                       rows={6}
                       maxLength={1000}
@@ -1004,7 +1006,7 @@ const ContentDetailsForm = ({
                   Object.keys(reviewErrors).length > 0 ||
                   submitReviewMutation.isPending
                 }
-                className="flex items-center space-x-2 px-8 py-3 bg-[#2563EB] text-white rounded-xl hover:bg-purple-700 transition-colors font-medium shadow-lg disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="flex items-center space-x-2 px-8 py-3 bg-[#892580] text-white rounded-xl hover:bg-purple-700 transition-colors font-medium shadow-lg disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 {submitReviewMutation.isPending ? (
                   <>

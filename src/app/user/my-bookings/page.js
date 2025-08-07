@@ -484,12 +484,16 @@ const hasPendingPayment = booking.paymentSummary?.pendingAmount > 0;
 //   return `grid-cols-${buttonCount}`;
 // };
 const getGridCols = (booking) => {
-  let buttonCount = 2; // Details and Support always visible
+  let buttonCount = 2; // Always Details and Support
+
   if (canCancelBooking) buttonCount++;
   if (hasPendingPayment && canShowPayButton) buttonCount++;
-  if (booking.paymentSummary?.totalInvoices > 0) buttonCount++; // Add download button if invoices exist
-  return `grid-cols-${buttonCount}`;
+  if (booking.paymentSummary?.totalInvoices > 0) buttonCount++;
+
+  // Example: base = 1, sm = 2, md = buttonCount
+  return `grid-cols-1 sm:grid-cols-2 md:grid-cols-${buttonCount}`;
 };
+
 
               return (
                 <div
@@ -519,7 +523,7 @@ const getGridCols = (booking) => {
                         <div className="flex-1 min-w-0">
                           <div className="mb-2">
                             <h3 className="text-lg sm:text-xl font-bold text-gray-900 truncate">
-                              {booking.packageId ? "SKL Package" : booking?.entityDetails?.name}
+                              {booking.packageId ? "Aloka Package" : booking?.entityDetails?.name}
                             </h3>
                             
                             <div className="flex flex-wrap gap-1 sm:gap-2 mt-2">

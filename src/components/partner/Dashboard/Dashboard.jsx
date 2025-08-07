@@ -1,153 +1,153 @@
 "use client";
 import React from "react";
-import { BarChart3, TrendingUp } from "lucide-react";
+import { BarChart3, RefreshCw, AlertCircle } from "lucide-react";
 import DashboardStatsCards from "./Stats";
 import RevenueSection from "./RevenueSection";
 import BookingsTable from "./BookingTable";
-
-// Sample avatar images
-const user1 = "/Assets/partner/user1.png";
-const user2 = "/Assets/partner/user2.png";
-const user3 = "/Assets/partner/user3.png";
-const user4 = "/Assets/partner/user4.png";
-const user5 = "/Assets/partner/user5.png";
+import { useDashboard } from "../../../hooks/usePartnerDashboard";
 
 const DashboardPage = () => {
-  // Static dummy data for stats
-  const stats = {
-    totalBookings: 45,
-    totalRevenue: 89235,
-    totalPending: 8,
-    completedWorks: 37,
-  };
+  const { 
+    data: dashboardData, 
+    isLoading, 
+    error, 
+    refetch,
+    isFetching
+  } = useDashboard();
 
-  // Sample bookings data
-  const currentBookings = [
-    {
-      customerName: "Alice Green",
-      date: "22 Oct 2024",
-      startTime: "10:00",
-      endTime: "13:00",
-      timeInHrs: "3.00 Hrs",
-      avatar: user1,
-      customerEmail: "alice@example.com"
-    },
-    {
-      customerName: "Robert Black",
-      date: "21 Oct 2024",
-      startTime: "14:00",
-      endTime: "16:00",
-      timeInHrs: "2.00 Hrs",
-      avatar: user2,
-      customerEmail: "robert@example.com"
-    },
-    {
-      customerName: "Sophia White",
-      date: "20 Oct 2024",
-      startTime: "09:00",
-      endTime: "12:00",
-      timeInHrs: "3.00 Hrs",
-      avatar: user3,
-      customerEmail: "sophia@example.com"
-    },
-    {
-      customerName: "Liam Brown",
-      date: "19 Oct 2024",
-      startTime: "11:30",
-      endTime: "13:30",
-      timeInHrs: "2.00 Hrs",
-      avatar: user4,
-      customerEmail: "liam@example.com"
-    },
-    {
-      customerName: "Emily Grey",
-      date: "18 Oct 2024",
-      startTime: "15:00",
-      endTime: "17:00",
-      timeInHrs: "2.00 Hrs",
-      avatar: user5,
-      customerEmail: "emily@example.com"
-    },
-  ];
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white p-6">
+        <div className="mx-auto space-y-8">
+          {/* Header skeleton */}
+          <div className="flex items-center gap-3 mb-8">
+            <div className="bg-gradient-to-r from-[#892580] to-purple-600 p-3 rounded-xl">
+              <BarChart3 className="text-white" size={24} />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+              <p className="text-gray-600">Loading your business overview...</p>
+            </div>
+          </div>
 
-  const upcomingBookings = [
-    {
-      customerName: "Olivia Harper",
-      date: "15 Nov 2024",
-      startTime: "09:00",
-      endTime: "12:00",
-      timeInHrs: "3.00 Hrs",
-      avatar: user5,
-      customerEmail: "olivia@example.com"
-    },
-    {
-      customerName: "Ethan Cross",
-      date: "17 Nov 2024",
-      startTime: "13:00",
-      endTime: "16:00",
-      timeInHrs: "3.00 Hrs",
-      avatar: user4,
-      customerEmail: "ethan@example.com"
-    },
-    {
-      customerName: "Isabella Moore",
-      date: "20 Nov 2024",
-      startTime: "11:00",
-      endTime: "14:00",
-      timeInHrs: "3.00 Hrs",
-      avatar: user2,
-      customerEmail: "isabella@example.com"
-    },
-    {
-      customerName: "Noah Brooks",
-      date: "22 Nov 2024",
-      startTime: "10:30",
-      endTime: "12:30",
-      timeInHrs: "2.00 Hrs",
-      avatar: user3,
-      customerEmail: "noah@example.com"
-    },
-    {
-      customerName: "Ava Turner",
-      date: "25 Nov 2024",
-      startTime: "14:00",
-      endTime: "17:00",
-      timeInHrs: "3.00 Hrs",
-      avatar: user1,
-      customerEmail: "ava@example.com"
-    },
-  ];
+          {/* Loading skeletons */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 animate-pulse">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                    <div className="h-8 bg-gray-200 rounded mb-1"></div>
+                    <div className="h-3 bg-gray-200 rounded w-3/4"></div>
+                  </div>
+                  <div className="w-12 h-12 bg-gray-200 rounded-xl"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Revenue section skeleton */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8 animate-pulse">
+            <div className="h-6 bg-gray-200 rounded mb-4 w-1/3"></div>
+            <div className="h-96 bg-gray-200 rounded"></div>
+          </div>
+
+          {/* Bookings table skeleton */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 animate-pulse">
+            <div className="h-6 bg-gray-200 rounded mb-4 w-1/4"></div>
+            <div className="space-y-4">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="flex items-center space-x-4">
+                  <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-gray-200 rounded"></div>
+                    <div className="h-3 bg-gray-200 rounded w-3/4"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white p-6">
+        <div className="mx-auto space-y-8">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="bg-gradient-to-r from-[#892580] to-purple-600 p-3 rounded-xl">
+              <BarChart3 className="text-white" size={24} />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+              <p className="text-gray-600">Welcome back! Here's your business overview</p>
+            </div>
+          </div>
+
+          {/* Error message */}
+          <div className="bg-red-50 border border-red-200 rounded-xl p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <AlertCircle className="text-red-600" size={24} />
+              <h3 className="text-lg font-semibold text-red-800">Error Loading Dashboard</h3>
+            </div>
+            <p className="text-red-700 mb-4">{error.message}</p>
+            <button
+              onClick={() => refetch()}
+              disabled={isFetching}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              <RefreshCw className={`w-4 h-4 ${isFetching ? 'animate-spin' : ''}`} />
+              {isFetching ? 'Retrying...' : 'Try Again'}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Extract data with fallbacks
+  const { stats, currentBookings, upcomingBookings, revenueData } = dashboardData?.data || {};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white p-6">
-      <div className=" mx-auto space-y-8">
+      <div className="mx-auto space-y-8">
         {/* Page Header */}
-        <div className="flex items-center gap-3 mb-8">
-          <div className="bg-gradient-to-r from-[#2563EB] to-purple-600 p-3 rounded-xl">
-            <BarChart3 className="text-white" size={24} />
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3">
+            <div className="bg-gradient-to-r from-[#892580] to-purple-600 p-3 rounded-xl">
+              <BarChart3 className="text-white" size={24} />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+              <p className="text-gray-600">Welcome back! Here's your business overview</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600">Welcome back! Here's your business overview</p>
-          </div>
+
+          {/* Refresh button */}
+          <button
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            <RefreshCw className={`w-4 h-4 ${isFetching ? 'animate-spin' : ''}`} />
+            {isFetching ? 'Refreshing...' : 'Refresh'}
+          </button>
         </div>
 
         {/* Stats Cards */}
         <DashboardStatsCards stats={stats} />
 
         {/* Revenue Section */}
-        <RevenueSection 
-          revenueData={{
-            totalRevenue: stats.totalRevenue,
-            period: "Jan 2024",
-            growthPercentage: "+12.5%"
-          }}
-        />
+        <RevenueSection revenueData={revenueData} />
 
         {/* Bookings Table */}
         <BookingsTable 
-          currentBookings={currentBookings}
-          upcomingBookings={upcomingBookings}
+          currentBookings={currentBookings || []}
+          upcomingBookings={upcomingBookings || []}
         />
       </div>
     </div>

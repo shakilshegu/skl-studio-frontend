@@ -10,15 +10,38 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useFreelancersData } from "@/hooks/useFreelancerData";
 
 const FreelancersPage = () => {
+  // ✅ FIXED: Call useFreelancersData() ONLY here, get ALL needed values
   const {
     // State
     searchTerm,
     setSearchTerm,
+    selectedLocation,
     setSelectedLocation,
     selectedCategory,
     setSelectedCategory,
-
-    error,
+    priceRange,
+    setPriceRange,
+    sortBy,
+    setSortBy,
+    userLocation,
+    locationRadius,
+    setLocationRadius,
+    showMobileFilters,
+    setShowMobileFilters,
+    viewMode,
+    setViewMode,
+    
+    // Computed
+    filteredFreelancers,
+    uniqueLocations,
+    hasActiveFilters,
+    
+    // Actions
+    clearFilters,
+    
+    // Query state
+    isLoading,
+    error
   } = useFreelancersData();
 
   const [location, setLocation] = useState("");
@@ -59,7 +82,7 @@ const FreelancersPage = () => {
     } else if (isInitialLoad.current) {
       isInitialLoad.current = false;
     }
-  }, [searchLocation, newLocationString, setSelectedLocation]);
+  }, [searchLocation, newLocationString, setSelectedLocation, setSelectedCategory]);
 
   // Function to update URL parameters
   const updateURLParams = (newParams) => {
@@ -120,7 +143,7 @@ const FreelancersPage = () => {
     }
   };
 
-const {
+  const {
     data: categories,
     isLoading: categoriesLoading,
     isError: categoriesError,
@@ -157,7 +180,7 @@ const {
         {categoriesError && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-600 text-sm mb-2">
-              Failed to load categories: {error?.message || "Please try again."}
+              Failed to load categories: {categoriesErrorDetails?.message || "Please try again."}
             </p>
             <button
               onClick={() => refetchCategories()}
@@ -177,15 +200,33 @@ const {
 
         {/* Package Display */}
         <PackageDisplay
-          // selectedCategoryId={selectedTypeId}
-          // selectedCategoryId={selectedCategoryId}
           selectedCategory={selectedCategory}
         />
-
-        {/* Freelancers */}
         <Freelancers
+          // State props
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
+          selectedLocation={selectedLocation}
+          setSelectedLocation={setSelectedLocation}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          priceRange={priceRange}
+          setPriceRange={setPriceRange}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          userLocation={userLocation}
+          locationRadius={locationRadius}
+          setLocationRadius={setLocationRadius}
+          showMobileFilters={showMobileFilters}
+          setShowMobileFilters={setShowMobileFilters}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
+          filteredFreelancers={filteredFreelancers}
+          uniqueLocations={uniqueLocations}
+          hasActiveFilters={hasActiveFilters}
+          clearFilters={clearFilters}
+          isLoading={isLoading}
+          error={error}
           handleLocation={handleLocationChange}
           handleChangeCoordinates={handleCoordinates}
           locationString={locationString}

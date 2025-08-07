@@ -17,7 +17,7 @@ const MobileFilterControls = ({
         <SlidersHorizontal className="w-4 h-4" />
         Filters
         {hasActiveFilters && (
-          <span className="bg-[#2563EB] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          <span className="bg-[#892580] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
             !
           </span>
         )}

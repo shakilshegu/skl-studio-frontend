@@ -13,6 +13,7 @@ import {
   Sparkles,
   ArrowRight
 } from "lucide-react";
+import Faq from "./Faq";
 
 function ContactUs() {
   const [formData, setFormData] = useState({
@@ -44,8 +45,8 @@ function ContactUs() {
       icon: Mail,
       title: "Email Us",
       description: "Our friendly team is here to help",
-      contact: "hello@SKL.com",
-      action: "mailto:hello@SKL.com",
+      contact: "hello@aloka.com",
+      action: "mailto:hello@aloka.com",
       gradient: "from-blue-500 to-cyan-500"
     },
     {
@@ -180,7 +181,7 @@ function ContactUs() {
 
             {/* Quick Stats */}
             <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl p-8 text-white mt-12">
-              <h3 className="text-2xl font-bold mb-6">Why Choose SKL Support?</h3>
+              <h3 className="text-2xl font-bold mb-6">Why Choose Aloka Support?</h3>
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
                   <div className="text-3xl font-bold mb-2">&lt; 2hrs</div>
@@ -362,43 +363,7 @@ function ContactUs() {
         </div>
       </div>
 
-      {/* FAQ Section */}
-      <div className="bg-gradient-to-r from-gray-50 to-purple-50 py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-lg text-gray-600 mb-12">
-            Cannot find what you are looking for? Contact our support team.
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-            {[
-              {
-                question: "How quickly will I get a response?",
-                answer: "We typically respond to all inquiries within 2 hours during business hours (9 AM - 6 PM IST)."
-              },
-              {
-                question: "What information should I include?",
-                answer: "Please include your booking ID, detailed description of the issue, and any relevant screenshots."
-              },
-              {
-                question: "Do you offer phone support?",
-                answer: "Yes, we offer phone support for urgent matters. Call us at +91 98765 43210 during business hours."
-              },
-              {
-                question: "Can I get help with booking issues?",
-                answer: "Absolutely! Our team can help with booking modifications, cancellations, and payment issues."
-              }
-            ].map((faq, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 shadow-lg">
-                <h3 className="text-lg font-bold text-gray-900 mb-3">{faq.question}</h3>
-                <p className="text-gray-600">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+ <Faq/>
     </div>
   );
 }

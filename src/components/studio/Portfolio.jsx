@@ -1,124 +1,40 @@
 import React, { useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
+import { useQuery } from "@tanstack/react-query";
+import { getPortfolioByPartnerId, getUserPortfolio } from "@/services/Portfolio/portfolio.service";
 import { showToast } from "../Toast/Toast";
 
-const bok1 = "/Assets/bok1.png";
-const bok2 = "/Assets/bok2.png";
-const bok3 = "/Assets/bok3.png";
-const bok4 = "/Assets/bok4.png";
-const bok5 = "/Assets/bok5.png";
-const bok6 = "/Assets/bok6.png";
-const bok7 = "/Assets/bok7.png";
-const Freelancer1 = "/Assets/Freelancer1.jpeg";
-const Freelancer2 = "/Assets/Freelancer2.jpeg";
-const Freelancer3 = "/Assets/Freelancer3.jpeg";
-const Freelancer4 = "/Assets/Freelancer4.jpeg";
-const Freelancer5 = "/Assets/Freelancer5.jpeg";
-const Freelancer6 = "/Assets/Freelancer6.jpeg";
-const Freelancer7 = "/Assets/Freelancer7.jpeg";
-const Freelancer8 = "/Assets/Freelancer8.jpeg";
-const Freelancer9 = "/Assets/Freelancer9.jpeg";
-const Freelancer10 = "/Assets/Freelancer10.jpeg";
-
-
-const categories = [
-    "Marriage", "Birthday", "Couple", "Commercial", "Product", "Sport", "Event"
-];
-
-const portfolioData = [
-    {
-        id: 1,
-        category: "Marriage",
-        images: [bok1, bok2, bok3, bok4, bok5, bok6],
-        title: "Mohil Prajapati Wedding",
-        location: "Hyderabad, Telangana",
-        description: "A grand marriage event captured with stunning detail and elegance.",
-        link: "https://www.sample.net/?file=marriage01"
-    },
-    {
-        id: 1,
-        category: "Marriage",
-        images: [Freelancer1, Freelancer2, Freelancer3, Freelancer4, Freelancer5, bok6],
-        title: "Mohil Prajapati Wedding",
-        location: "Hyderabad, Telangana",
-        description: "A grand marriage event captured with stunning detail and elegance.",
-        link: "https://www.sample.net/?file=marriage01"
-    },
-    {
-        id: 1,
-        category: "Marriage",
-        images: [Freelancer6, Freelancer7, Freelancer8, Freelancer9, Freelancer10, bok6],
-        title: "Mohil Prajapati Wedding",
-        location: "Hyderabad, Telangana",
-        description: "A grand marriage event captured with stunning detail and elegance.",
-        link: "https://www.sample.net/?file=marriage01"
-    },
-    {
-        id: 2,
-        category: "Birthday",
-        images: [bok2, bok3, bok5, bok4, bok1],
-        title: "Birthday Celebration",
-        location: "Hyderabad, Telangana",
-        description: "A joyful birthday event filled with fun, colors, and memories.",
-        link: "https://www.sample.net/?file=birthday02"
-    },
-    {
-        id: 3,
-        category: "Couple",
-        images: [bok3, bok4, bok5, bok6, bok7],
-        title: "Couple Photoshoot",
-        location: "Hyderabad, Telangana",
-        description: "Intimate moments captured beautifully during a couple photoshoot.",
-        link: "https://www.sample.net/?file=couple03"
-    },
-    {
-        id: 4,
-        category: "Commercial",
-        images: [bok4, bok5, bok6, bok1],
-        title: "Commercial Advertisement Shoot",
-        location: "Hyderabad, Telangana",
-        description: "Professional commercial shoot showcasing brand products and services.",
-        link: "https://www.sample.net/?file=commercial04"
-    },
-    {
-        id: 5,
-        category: "Product",
-        images: [bok5, bok6, bok2, bok3],
-        title: "Product Photoshoot",
-        location: "Hyderabad, Telangana",
-        description: "High-quality product photography for e-commerce and catalogs.",
-        link: "https://www.sample.net/?file=product05"
-    },
-    {
-        id: 6,
-        category: "Sport",
-        images: [bok6, bok7, bok1, bok3],
-        title: "Sports Event Coverage",
-        location: "Hyderabad, Telangana",
-        description: "Capturing action-packed moments and highlights of sporting events.",
-        link: "https://www.sample.net/?file=sport06"
-    },
-    {
-        id: 7,
-        category: "Event",
-        images: [bok7, bok1, bok4, bok5],
-        title: "Corporate Event Photography",
-        location: "Hyderabad, Telangana",
-        description: "Professional coverage of corporate and social events.",
-        link: "https://www.sample.net/?file=event07"
-    }
-];
-
-
-const Portfolio = () => {
-    const [activeTab, setActiveTab] = useState("Marriage");
+const Portfolio = ({ partnerId}) => {
+    const [activeTab, setActiveTab] = useState("all");
     const [selectedPortfolio, setSelectedPortfolio] = useState(null);
     const [selectedImage, setSelectedImage] = useState("");
+    console.log("partnerId partnerId",partnerId);
+    
+
+    const { 
+        data: portfolioResponse, 
+        isLoading, 
+        isError 
+    } = useQuery({
+        queryKey: ["portfolio", partnerId],
+        queryFn: () => getPortfolioByPartnerId(partnerId),
+        select: (data) => data?.data || [],
+    });
+
+    console.log("portfolioResponse",portfolioResponse);
+    
+
+    const categories = portfolioResponse 
+        ? ["all", ...new Set(portfolioResponse.map(item => item.category?.toLowerCase()))]
+        : ["all"];
+    const filteredPortfolio = portfolioResponse?.filter(item => 
+        activeTab === "all" || item.category?.toLowerCase() === activeTab
+    ) || [];
 
     const openModal = (item) => {
         setSelectedPortfolio(item);
-        setSelectedImage(item.images[0]);
+        setSelectedImage(item.images?.[0] || "");
     };
 
     const closeModal = () => {
@@ -126,126 +42,216 @@ const Portfolio = () => {
         setSelectedImage("");
     };
 
+    // Loading state
+    if (isLoading) {
+        return (
+            <div className="p-4">
+                <h2 className="font-bold text-2xl md:text-3xl lg:text-4xl leading-10 mb-6">Portfolio</h2>
+                <div className="text-center py-8">
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#892580]"></div>
+                    <p className="mt-2 text-gray-600">Loading portfolio...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // Error state
+    if (isError) {
+        return (
+            <div className="p-4">
+                <h2 className="font-bold text-2xl md:text-3xl lg:text-4xl leading-10 mb-6">Portfolio</h2>
+                <div className="text-center py-8 text-red-500">
+                    Failed to load portfolio. Please try again later.
+                </div>
+            </div>
+        );
+    }
+
+    // Empty state
+    if (!portfolioResponse || portfolioResponse.length === 0) {
+        return (
+            <div className="p-4">
+                <h2 className="font-bold text-2xl md:text-3xl lg:text-4xl leading-10 mb-6">Portfolio</h2>
+                <p className="text-gray-600 py-8 text-center">
+                    No portfolio items available for this user yet.
+                </p>
+            </div>
+        );
+    }
+
     return (
         <div className="p-4">
-            <h2 className="text-3xl font-bold mb-6">Portfolio</h2>
+            <h2 className="font-bold text-2xl md:text-3xl lg:text-4xl leading-10 mb-6">Portfolio</h2>
 
             {/* Category Tabs */}
-            <div className="flex space-x-4 overflow-x-auto border rounded-lg bg-gray-100 mb-6 justify-between">
+            <div className="flex space-x-2 overflow-x-auto border rounded-lg bg-gray-50 p-1 mb-6">
                 {categories.map((category) => (
                     <button
                         key={category}
                         onClick={() => setActiveTab(category)}
-                        className={`px-4 py-2 text-sm rounded-md transition-all duration-200 ${activeTab === category
-                            ? "bg-white text-black font-semibold shadow-md"
-                            : ""
-                            }`}
+                        className={`px-4 py-2 text-sm rounded-md transition-all duration-200 whitespace-nowrap ${
+                            activeTab === category
+                                ? "bg-[#892580] text-white font-semibold shadow-md"
+                                : "text-gray-600 hover:text-gray-800"
+                        }`}
                     >
-                        {category}
+                        {category.charAt(0).toUpperCase() + category.slice(1)}
                     </button>
                 ))}
             </div>
 
             {/* Portfolio Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {portfolioData
-                    .filter((item) => item.category === activeTab)
-                    .map((item, index) => {
-                        const maxVisibleImages = 4;
-                        const hiddenImageCount = item.images.length - maxVisibleImages;
+                {filteredPortfolio.map((item, index) => {
+                    const maxVisibleImages = 4;
+                    const hiddenImageCount = (item.images?.length || 0) - maxVisibleImages;
 
-                        return (
-                            <div
-                                key={index}
-                                onClick={() => openModal(item)}
-                                className="cursor-pointer border rounded-lg shadow-sm p-4 bg-white hover:shadow-lg transition"
-                            >
-                                <div className="grid grid-cols-2 gap-2">
-                                    {item.images.slice(0, maxVisibleImages).map((img, i) => (
-                                        <div key={i} className="relative">
-                                            <img
-                                                src={img}
-                                                alt="portfolio"
-                                                className="rounded-md w-full h-24 object-cover"
-                                            />
-                                            {i === maxVisibleImages - 1 && hiddenImageCount > 0 && (
-                                                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white font-bold text-lg rounded-md">
-                                                    +{hiddenImageCount}
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="mt-3">
-                                    <div className="font-medium">{item.title}</div>
-                                    <p className="text-gray-600 flex items-center text-sm mt-1">
-                                        <FaMapMarkerAlt className="mr-1 text-gray-500" /> {item.location}
-                                    </p>
-                                </div>
+                    return (
+                        <div
+                            key={item._id || index}
+                            onClick={() => openModal(item)}
+                            className="cursor-pointer border rounded-lg shadow-sm p-4 bg-white hover:shadow-lg transition-shadow duration-200"
+                        >
+                            <div className="grid grid-cols-2 gap-2">
+                                {item.images?.slice(0, maxVisibleImages).map((img, i) => (
+                                    <div key={i} className="relative">
+                                        <img
+                                            src={img}
+                                            alt={`${item.title} - ${i + 1}`}
+                                            className="rounded-md w-full h-24 object-cover"
+                                            onError={(e) => {
+                                                e.target.src = "/Assets/placeholder-image.jpg";
+                                            }}
+                                        />
+                                        {i === maxVisibleImages - 1 && hiddenImageCount > 0 && (
+                                            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white font-bold text-lg rounded-md">
+                                                +{hiddenImageCount}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
-                        );
-                    })}
+                            <div className="mt-3">
+                                <div className="font-semibold text-lg text-[#892580]">{item.title}</div>
+                                <p className="text-gray-600 flex items-center text-sm mt-1">
+                                    <FaMapMarkerAlt className="mr-1 text-gray-500" /> 
+                                    {item.location}
+                                </p>
+                                <p className="text-sm text-gray-500 mt-1 capitalize">
+                                    {item.category} Shoot
+                                </p>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
+
+            {/* Show message if no items in filtered category */}
+            {filteredPortfolio.length === 0 && activeTab !== "all" && (
+                <div className="text-center py-8 text-gray-600">
+                    No portfolio items found for "{activeTab}" category.
+                </div>
+            )}
 
             {/* Modal */}
             {selectedPortfolio && (
-                <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-xl p-6 w-[90%] lg:w-3/4 h-[90%] overflow-auto relative">
+                <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-xl p-6 w-full max-w-6xl max-h-[90vh] overflow-auto relative">
                         <button
                             onClick={closeModal}
-                            className="absolute top-4 right-4 text-gray-600 hover:text-black text-2xl"
+                            className="absolute top-4 right-4 text-gray-600 hover:text-black text-2xl z-10"
                         >
                             <IoMdClose />
                         </button>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {/* Left side large image and thumbnails */}
+                        
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            {/* Left side - Large image and thumbnails */}
                             <div>
                                 <img
                                     src={selectedImage}
-                                    alt="preview"
+                                    alt={selectedPortfolio.title}
                                     className="w-full h-80 object-cover rounded-lg mb-4"
+                                    onError={(e) => {
+                                        e.target.src = "/Assets/placeholder-image.jpg";
+                                    }}
                                 />
-                                <div className="flex gap-2 overflow-x-auto">
-                                    {selectedPortfolio.images.map((img, i) => (
+                                <div className="flex gap-2 overflow-x-auto pb-2">
+                                    {selectedPortfolio.images?.map((img, i) => (
                                         <img
                                             key={i}
                                             src={img}
                                             onClick={() => setSelectedImage(img)}
-                                            alt="thumbnail"
-                                            className={`w-20 h-20 rounded-md cursor-pointer object-cover border ${selectedImage === img ? "border-blue-500" : "border-gray-300"}`}
+                                            alt={`${selectedPortfolio.title} thumbnail ${i + 1}`}
+                                            className={`w-20 h-20 rounded-md cursor-pointer object-cover border-2 flex-shrink-0 ${
+                                                selectedImage === img ? "border-[#892580]" : "border-gray-300"
+                                            }`}
+                                            onError={(e) => {
+                                                e.target.src = "/Assets/placeholder-image.jpg";
+                                            }}
                                         />
                                     ))}
                                 </div>
                             </div>
 
-                            {/* Right side details */}
+                            {/* Right side - Details */}
                             <div>
-                                <p><strong>Category:</strong> {selectedPortfolio.category} Shoot</p>
-                                <p className="mt-2"><strong>Title:</strong> {selectedPortfolio.title}</p>
-                                <p className="mt-2"><strong>Description:</strong> {selectedPortfolio.description}</p>
-                                <p className="mt-2 flex items-center">
-                                    <FaMapMarkerAlt className="mr-2 text-gray-500" />
-                                    <strong>Location:</strong> {selectedPortfolio.location}
-                                </p>
-                                <div className="mt-4">
-                                    <label className="text-sm font-medium mb-2 block">Link:</label>
-                                    <div className="flex items-center border rounded overflow-hidden">
-                                        <input
-                                            type="text"
-                                            value={selectedPortfolio.link}
-                                            readOnly
-                                            className="w-full p-2 outline-none text-sm"
-                                        />
-                                        <button
-                                            onClick={() => {
-                                                navigator.clipboard.writeText(selectedPortfolio.link);
-                                                showToast("Link copied!");
-                                            }}
-                                            className="px-4 py-2 bg-[#892580] text-white text-sm"
-                                        >
-                                            Copy
-                                        </button>
+                                <div className="space-y-4">
+                                    <div>
+                                        <span className="font-semibold text-gray-700">Category:</span>
+                                        <span className="ml-2 capitalize">{selectedPortfolio.category} Shoot</span>
                                     </div>
+                                    
+                                    <div>
+                                        <span className="font-semibold text-gray-700">Title:</span>
+                                        <span className="ml-2">{selectedPortfolio.title}</span>
+                                    </div>
+                                    
+                                    <div>
+                                        <span className="font-semibold text-gray-700">Description:</span>
+                                        <p className="mt-1 text-gray-600">{selectedPortfolio.description}</p>
+                                    </div>
+                                    
+                                    <div className="flex items-center">
+                                        <FaMapMarkerAlt className="mr-2 text-gray-500" />
+                                        <span className="font-semibold text-gray-700">Location:</span>
+                                        <span className="ml-2">{selectedPortfolio.location}</span>
+                                    </div>
+
+                                    {/* Link section - only show if link exists */}
+                                    {selectedPortfolio.link && (
+                                        <div>
+                                            <label className="text-sm font-semibold text-gray-700 mb-2 block">
+                                                Portfolio Link:
+                                            </label>
+                                            <div className="flex items-center border rounded-lg overflow-hidden">
+                                                <input
+                                                    type="text"
+                                                    value={selectedPortfolio.link}
+                                                    readOnly
+                                                    className="w-full p-3 outline-none text-sm bg-gray-50"
+                                                />
+                                                <button
+                                                    onClick={() => {
+                                                        navigator.clipboard.writeText(selectedPortfolio.link);
+                                                        showToast("Link copied to clipboard!");
+                                                    }}
+                                                    className="px-4 py-3 bg-[#892580] text-white text-sm font-medium hover:bg-[#7a2272] transition-colors"
+                                                >
+                                                    Copy
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Additional metadata if available */}
+                                    {selectedPortfolio.date && (
+                                        <div>
+                                            <span className="font-semibold text-gray-700">Date:</span>
+                                            <span className="ml-2">
+                                                {new Date(selectedPortfolio.date).toLocaleDateString()}
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Cookies from "js-cookie";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,7 +12,6 @@ const image12 = "/Assets/partner/image12.png";
 
 const FreelancerDetails = ({ setIsEditing, isEditing }) => {
   const queryClient = useQueryClient();
-  const fileInputRef = useRef();
 
   // Initial Form Data - Updated to include lat/lng
   const initialFormData = {
@@ -353,13 +352,13 @@ const FreelancerDetails = ({ setIsEditing, isEditing }) => {
                 htmlFor="profile-upload"
                 className={`image-upload ${imageError ? 'border border-danger' : ''}`}
               >
-                <div  className="image-placeholder"  style={{ height: "100px" }}>
-                  <img onClick={() => fileInputRef.current?.click()} className="cursor-pointer" src={image12} alt="Placeholder" />
+                <div className="image-placeholder" style={{ height: "100px" }}>
+                  <img src={image12} alt="Placeholder" />
                   <div>
                     <p>
                       Drop your file here or{" "}
-                      <label className="browse-link cursor-pointer" htmlFor="profileImageInput">
-                        <span className="underline text-blue-600">Browse</span>
+                      <label className="browse-link" htmlFor="profileImageInput">
+                        <span>Browse</span>
                       </label>
                     </p>
                     <p className="file-size">Maximum size: 5MB</p>
@@ -367,7 +366,6 @@ const FreelancerDetails = ({ setIsEditing, isEditing }) => {
                 </div>
                 <input
                   key={profileImage ? "has-image" : "no-image"}
-                   ref={fileInputRef}
                   id="profileImageInput"
                   type="file"
                   accept="image/jpeg, image/png, image/gif, image/webp"

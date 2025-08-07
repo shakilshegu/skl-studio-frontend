@@ -4,7 +4,7 @@ import { getStudioById } from '@/services/studio/studio.service';
 import StudioDetails from '@/components/studio/StudioDetails';
 import { notFound } from 'next/navigation';
 
-// Loading component for better UX
+
 function StudioDetailsLoading() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -83,23 +83,15 @@ export default async function StudioDetailsPage({ params, searchParams }) {
   try {
     const { id } = await params;
     const queryParams = await searchParams;
-    
-    // Validate the ID format (assuming MongoDB ObjectId)
     if (!id || id.length !== 24) {
       notFound();
     }
-    
-    // Fetch studio data
     const response = await getStudioById(id);
-    
-    // Handle different response structures
     const studio = response?.studio || response;
     
     if (!studio) {
       notFound();
     }
-    
-    // Extract entity info from search params for potential use
     const entityType = queryParams?.entityType;
     const entityId = queryParams?.entityId;
 
@@ -119,7 +111,6 @@ export default async function StudioDetailsPage({ params, searchParams }) {
   } catch (error) {
     console.error('Error in StudioDetailsPage:', error);
     
-    // You might want to show an error page instead
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">

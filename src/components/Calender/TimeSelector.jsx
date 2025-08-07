@@ -104,7 +104,7 @@ const TimeSelector = ({
       {/* Show loading only for non-admin packages */}
       {isLoading && !isAdminPackage ? (
         <div className="flex justify-center items-center py-6">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#2563EB]"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#892580]"></div>
           <span className="ml-3 text-gray-600">Loading availability...</span>
         </div>
       ) : (
@@ -114,12 +114,12 @@ const TimeSelector = ({
             <div 
               className={`
                 flex justify-between items-center bg-white p-4 rounded-lg border 
-                ${showStartTimeSelector ? 'border-[#2563EB] shadow-md' : 'border-gray-200'} 
+                ${showStartTimeSelector ? 'border-[#892580] shadow-md' : 'border-gray-200'} 
                 mb-1 transition-all duration-200
               `}
             >
               <div className="flex items-center">
-                <div className="w-10 h-10 rounded-full bg-[#2563EB] flex items-center justify-center mr-3 shadow-sm">
+                <div className="w-10 h-10 rounded-full bg-[#892580] flex items-center justify-center mr-3 shadow-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -133,8 +133,8 @@ const TimeSelector = ({
                   ${(selectedDateFullyBooked && !isAdminPackage)
                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
                     : selectedStartTime !== null 
-                      ? 'bg-purple-50 text-[#2563EB] cursor-pointer hover:bg-purple-100'
-                      : 'bg-gray-50 hover:bg-gray-100 text-[#2563EB] cursor-pointer'
+                      ? 'bg-purple-50 text-[#892580] cursor-pointer hover:bg-purple-100'
+                      : 'bg-gray-50 hover:bg-gray-100 text-[#892580] cursor-pointer'
                   }
                 `}
                 onClick={() => {
@@ -184,14 +184,14 @@ const TimeSelector = ({
                         }
                       }}
                     >
-                      <span className={`${isSelected ? 'text-[#2563EB] font-semibold' : 'text-gray-700'}`}>
+                      <span className={`${isSelected ? 'text-[#892580] font-semibold' : 'text-gray-700'}`}>
                         {slot.display}
                       </span>
                       
                       {!isAvailable && !isAdminPackage ? (
                         <span className="text-xs bg-red-50 text-red-500 px-2 py-0.5 rounded-full">Booked</span>
                       ) : isSelected ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#2563EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#892580]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       ) : (
@@ -211,12 +211,12 @@ const TimeSelector = ({
             <div 
               className={`
                 flex justify-between items-center bg-white p-4 rounded-lg border 
-                ${showEndTimeSelector ? 'border-[#2563EB] shadow-md' : 'border-gray-200'} 
+                ${showEndTimeSelector ? 'border-[#892580] shadow-md' : 'border-gray-200'} 
                 mb-1 transition-all duration-200
               `}
             >
               <div className="flex items-center">
-                <div className="w-10 h-10 rounded-full bg-[#2563EB] flex items-center justify-center mr-3 shadow-sm">
+                <div className="w-10 h-10 rounded-full bg-[#892580] flex items-center justify-center mr-3 shadow-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                   </svg>
@@ -229,8 +229,8 @@ const TimeSelector = ({
                   flex items-center px-3 py-1.5 rounded-lg transition-colors duration-200
                   ${(selectedStartTime !== null && !(selectedDateFullyBooked && !isAdminPackage))
                     ? selectedEndTime !== null 
-                      ? 'bg-purple-50 text-[#2563EB] cursor-pointer hover:bg-purple-100' 
-                      : 'bg-gray-50 hover:bg-gray-100 text-[#2563EB] cursor-pointer'
+                      ? 'bg-purple-50 text-[#892580] cursor-pointer hover:bg-purple-100' 
+                      : 'bg-gray-50 hover:bg-gray-100 text-[#892580] cursor-pointer'
                     : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                   }
                 `}
@@ -288,7 +288,7 @@ const TimeSelector = ({
                         }
                       }}
                     >
-                      <span className={`${isSelected ? 'text-[#2563EB] font-semibold' : 'text-gray-700'}`}>
+                      <span className={`${isSelected ? 'text-[#892580] font-semibold' : 'text-gray-700'}`}>
                         {slot.display}
                       </span>
                       
@@ -297,7 +297,7 @@ const TimeSelector = ({
                       ) : (!allSlotsAvailable && !isAdminPackage) ? (
                         <span className="text-xs bg-red-50 text-red-500 px-2 py-0.5 rounded-full">Unavailable</span>
                       ) : isSelected ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#2563EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#892580]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       ) : (

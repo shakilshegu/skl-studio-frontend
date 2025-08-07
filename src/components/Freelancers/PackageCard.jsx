@@ -23,15 +23,15 @@ const PackageCard = ({ pkg, index ,toggleFavorite,favoritePackages,router}) => {
       onClick={() => handleCardClick(pkg._id)}
     >
       {/* Featured Badge for First Package */}
-      {index === 0 && (
+      {/* {index === 0 && (
         <div className="absolute top-4 left-4 z-10 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
           <Sparkles className="w-3 h-3" />
           FEATURED
         </div>
-      )}
+      )} */}
 
       {/* Favorite Button */}
-      <button
+      {/* <button
         onClick={(e) => toggleFavorite(pkg._id, e)}
         className={`absolute top-4 right-4 z-10 p-2 rounded-full backdrop-blur-sm transition-all duration-300 ${
           isFavorite
@@ -43,7 +43,7 @@ const PackageCard = ({ pkg, index ,toggleFavorite,favoritePackages,router}) => {
           className="w-4 h-4"
           fill={isFavorite ? "currentColor" : "none"}
         />
-      </button>
+      </button> */}
 
       {/* Image Section */}
       <div className="relative h-48 overflow-hidden">
@@ -114,7 +114,7 @@ const PackageCard = ({ pkg, index ,toggleFavorite,favoritePackages,router}) => {
         </div>
 
         {/* Stats Row */}
-        <div className="flex items-center gap-4 mb-6 text-xs text-gray-500">
+        {/* <div className="flex items-center gap-4 mb-6 text-xs text-gray-500">
           <div className="flex items-center gap-1">
             <Users className="w-3 h-3" />
             <span>89 bookings</span>
@@ -123,7 +123,7 @@ const PackageCard = ({ pkg, index ,toggleFavorite,favoritePackages,router}) => {
             <Star className="w-3 h-3 text-yellow-400 fill-current" />
             <span>4.8 rating</span>
           </div>
-        </div>
+        </div> */}
 
         {/* Action Buttons */}
         <div className="flex gap-3 mt-auto">

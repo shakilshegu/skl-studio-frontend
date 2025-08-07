@@ -146,13 +146,13 @@ const Sidebar = ({ onItemClick }) => {
       color: "text-rose-600",
       bgColor: "bg-rose-50"
     },
-    {
-      icon: Settings,
-      label: "Settings",
-      path: "/partner/settings",
-      color: "text-gray-600",
-      bgColor: "bg-gray-50"
-    }
+    // {
+    //   icon: Settings,
+    //   label: "Settings",
+    //   path: "/partner/settings",
+    //   color: "text-gray-600",
+    //   bgColor: "bg-gray-50"
+    // }
   ], []);
 
   // Get initials for avatar

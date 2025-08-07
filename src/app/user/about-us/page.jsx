@@ -116,7 +116,7 @@ const page = () => {
             {/* Aloka Logo */}
             <div className="mb-8">
               <h1 className="text-6xl sm:text-8xl font-bold bg-gradient-to-r from-white to-brand-200 bg-clip-text text-transparent mb-4">
-                SKL
+                ALOKA
               </h1>
               <div className="w-24 h-1 bg-gradient-to-r from-brand-accent to-brand-secondary mx-auto rounded-full"></div>
             </div>
@@ -162,7 +162,7 @@ const page = () => {
               </h2>
               <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
                 <p>
-                  <strong className="text-brand-primary">SKL</strong> was born from a simple yet powerful belief: 
+                  <strong className="text-brand-primary">Aloka</strong> was born from a simple yet powerful belief: 
                   every creative has the right to access world-class facilities and bring their artistic vision to life.
                 </p>
                 <p>
@@ -171,7 +171,7 @@ const page = () => {
                   expensive, and often inaccessible to emerging talent.
                 </p>
                 <p>
-                  Today, SKL stands as India's most trusted platform, having facilitated thousands of successful 
+                  Today, Aloka stands as India's most trusted platform, having facilitated thousands of successful 
                   collaborations between artists and studios. We've democratized access to professional creative 
                   infrastructure, making it possible for anyone with a vision to create something extraordinary.
                 </p>

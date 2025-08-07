@@ -229,7 +229,7 @@ const router=  useRouter()
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-              Why Choose SKL Partnership?
+              Why Choose Aloka Partnership?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Join thousands of successful partners who are already transforming their creative careers
@@ -261,7 +261,7 @@ const router=  useRouter()
               Get Started in 3 Simple Steps
             </h2>
             <p className="text-xl text-gray-600">
-              Join thousands of partners earning with SKL
+              Join thousands of partners earning with Aloka
             </p>
           </div>
 

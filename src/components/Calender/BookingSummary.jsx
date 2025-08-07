@@ -188,16 +188,16 @@ const BookingSummary = ({
       <div className={`mt-6 p-5 border rounded-lg shadow ${
         isAdminPackage 
           ? 'bg-purple-50 border-purple-300' 
-          : 'bg-purple-50 border-[#2563EB]'
+          : 'bg-purple-50 border-[#892580]'
       }`}>
         <div className="flex items-center justify-between mb-3">
-          <h4 className={`font-bold text-lg text-[#2563EB]`}>
+          <h4 className={`font-bold text-lg text-[#892580]`}>
             {isAdminPackage ? 'Package Booking Summary' : 'Your Booking Summary'}
           </h4>
           {totalDatesSelected > 1 && (
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className={`hover:underline flex items-center text-[#2563EB]`}
+              className={`hover:underline flex items-center text-[#892580]`}
             >
               {isExpanded ? 'Show Less' : 'Show Details'}
               <svg
@@ -218,12 +218,12 @@ const BookingSummary = ({
         {isAdminPackage && (
           <div className="mb-4 p-3 bg-purple-100 border border-purple-200 rounded-lg">
             <div className="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#2563EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#892580]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
               </svg>
-              <span className="text-sm font-medium text-[#2563EB]">Admin Package Booking</span>
+              <span className="text-sm font-medium text-[#892580]">Admin Package Booking</span>
             </div>
-            <p className="text-xs text-[#2563EB] mt-1">Package ID: #{entityId?.slice(-8) || 'ADMIN'}</p>
+            <p className="text-xs text-[#892580] mt-1">Package ID: #{entityId?.slice(-8) || 'ADMIN'}</p>
           </div>
         )}
         
@@ -232,8 +232,8 @@ const BookingSummary = ({
             <div className="text-gray-700">
               <span className="font-medium">{totalDatesSelected}</span> {totalDatesSelected === 1 ? 'day' : 'days'} selected
             </div>
-            <div className={`font-bold text-[#2563EB]`}>
-              <span className={`text-white text-xs font-bold px-2 py-0.5 rounded-full bg-[#2563EB]`}>
+            <div className={`font-bold text-[#892580]`}>
+              <span className={`text-white text-xs font-bold px-2 py-0.5 rounded-full bg-[#892580]`}>
                 {calculateTotalHours()} total hours
               </span>
             </div>
@@ -260,7 +260,7 @@ const BookingSummary = ({
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className={`font-bold text-[#2563EB]`}>
+                  <div className={`font-bold text-[#892580]`}>
                     {dateData.endTime - dateData.startTime} hour{dateData.endTime - dateData.startTime !== 1 ? 's' : ''}
                   </div>
                 </div>
@@ -279,7 +279,7 @@ const BookingSummary = ({
             w-full px-6 py-4 rounded-lg text-white font-medium text-lg focus:outline-none 
             focus:ring-2 focus:ring-offset-2 shadow-md transition-all duration-200
             ${!isProcessing
-              ? 'bg-[#2563EB] hover:bg-[#7D1F72] focus:ring-[#2563EB] transform hover:scale-[1.02]'
+              ? 'bg-[#892580] hover:bg-[#7D1F72] focus:ring-[#892580] transform hover:scale-[1.02]'
               : 'bg-gray-300 cursor-not-allowed'
             }
           `}

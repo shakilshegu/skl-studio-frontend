@@ -3,13 +3,10 @@ import Features from "@/components/Home/Features";
 import HomeSection from "@/components/Home/HomeSection";
 import AdminPackages from "@/components/Home/ServicePackage";
 import Testimonial from "@/components/Home/Testimonial";
-import { getCategoryWiseStudio } from "@/services/Home/home.service";
 import { Suspense } from "react";
 
 async function HomePage() {
     const TypeofStudio = []
-    // await getCategoryWiseStudio();
-
     return (
         <>
             <Suspense fallback={<div>Loading.....</div>}>

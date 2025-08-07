@@ -155,3 +155,15 @@ export const getFreelancerHelpers = async (id) => {
     throw new Error('Error fetching Freelancer details');
   }
 }
+
+export const fetchSimilarFreelancers = async (categoryId) => {
+  if (!categoryId) return { similarFreelancers: [] };
+
+  try {  
+    const response = await axiosInstance.get(`/user/freelancers/similar-freelancers/${categoryId}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error fetching similar freelancers');
+  }
+}

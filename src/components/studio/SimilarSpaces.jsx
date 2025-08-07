@@ -1,5 +1,5 @@
 "use client"
-// import { fetchSimilarStudios } from "@/services/studio/studio.service";
+import { fetchSimilarStudios } from "@/services/studio/studio.service";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
@@ -21,17 +21,19 @@ const SpaceCard = ({ image, price, title, description }) => (
 
 // Main Similar Spaces Component
 const SimilarSpaces = ({ categoryId }) => {
-  // const { data, isLoading, isError, error } = useQuery({
-  //   queryKey: ['similarStudios', categoryId],
-  //   queryFn: () => fetchSimilarStudios(categoryId),
-  //   enabled: !!categoryId
-  // });
+  console.log("categoryId",categoryId);
+  
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['similarStudios', categoryId],
+    queryFn: () => fetchSimilarStudios(categoryId),
+    enabled: !!categoryId
+  });
 
-  // if (isLoading) return <div>Loading similar spaces...</div>;
-  // if (isError) return <div>Error: {error.message}</div>;
+  if (isLoading) return <div>Loading similar spaces...</div>;
+  if (isError) return <div>Error: {error.message}</div>;
 
-  // const studios = data?.studios || [];
-  const studios =  [];
+  const studios = data?.studios || [];
+  // const studios =  [];
 
   if (studios.length === 0) return null;
 

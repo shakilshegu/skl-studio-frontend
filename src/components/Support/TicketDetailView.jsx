@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 import { 
   ArrowLeft, 
   Calendar, 
@@ -18,11 +19,14 @@ import {
   Shield,
   Building2,
   UserCircle2,
-  Bot
+  Loader2
 } from 'lucide-react';
 import { useTicket, useAddComment } from '../../hooks/useSupportQueries';
 
-const TicketDetailView = ({ ticketId, onBack }) => {
+export default function TicketDetailPage({ticketId}) {
+  const router = useRouter();
+
+  
   const [comment, setComment] = useState('');
 
   // TanStack Query hooks
@@ -47,6 +51,7 @@ const TicketDetailView = ({ ticketId, onBack }) => {
       {
         onSuccess: () => {
           setComment('');
+          refetch(); // Refresh ticket data to show new comment
         },
         onError: (error) => {
           console.error('Error adding comment:', error);
@@ -54,6 +59,11 @@ const TicketDetailView = ({ ticketId, onBack }) => {
         }
       }
     );
+  };
+
+  // Handle back navigation
+  const handleBack = () => {
+    router.back();
   };
 
   // Format date
@@ -191,8 +201,9 @@ const TicketDetailView = ({ ticketId, onBack }) => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-8 h-8 border-2 border-[#892580] border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-          <p className="text-gray-600">Loading ticket details...</p>
+          <Loader2 className="w-12 h-12 text-[#892580] mx-auto mb-4 animate-spin" />
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">Loading ticket details...</h3>
+          <p className="text-gray-500">Please wait while we fetch the ticket information</p>
         </div>
       </div>
     );
@@ -202,18 +213,27 @@ const TicketDetailView = ({ ticketId, onBack }) => {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <XCircle className="w-12 h-12 text-red-500 mx-auto mb-2" />
+        <div className="text-center max-w-md mx-auto p-6">
+          <XCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">Error loading ticket</h3>
           <p className="text-red-600 mb-4">
             {error.response?.data?.message || error.message || 'Failed to load ticket details'}
           </p>
-          <button
-            onClick={() => refetch()}
-            className="px-4 py-2 bg-[#892580] text-white rounded-lg hover:bg-[#7a2073] transition-colors flex items-center gap-2 mx-auto"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Try Again
-          </button>
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => refetch()}
+              className="px-4 py-2 bg-[#892580] text-white rounded-lg hover:bg-[#7a2073] transition-colors flex items-center gap-2"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Try Again
+            </button>
+            <button
+              onClick={handleBack}
+              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              Go Back
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -224,8 +244,15 @@ const TicketDetailView = ({ ticketId, onBack }) => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <FileText className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-          <p className="text-gray-600">Ticket not found</p>
+          <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">Ticket not found</h3>
+          <p className="text-gray-600 mb-4">The ticket you're looking for doesn't exist or you don't have access to it.</p>
+          <button
+            onClick={handleBack}
+            className="px-4 py-2 bg-[#892580] text-white rounded-lg hover:bg-[#7a2073] transition-colors"
+          >
+            Go Back
+          </button>
         </div>
       </div>
     );
@@ -238,12 +265,12 @@ const TicketDetailView = ({ ticketId, onBack }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto p-6">
+      <div className=" mx-auto p-6 px-14">
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-6">
           <div className="flex items-center gap-4 mb-4">
             <button
-              onClick={onBack}
+              onClick={handleBack}
               className="p-3 hover:bg-gray-100 rounded-xl transition-all duration-200 hover:scale-105"
             >
               <ArrowLeft className="w-5 h-5 text-gray-600" />
@@ -251,7 +278,7 @@ const TicketDetailView = ({ ticketId, onBack }) => {
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
                 <h1 className="text-2xl font-bold text-black">{ticketData.title}</h1>
-                <span className={`px-4 py-2 rounded-full text-sm font-semibold text-white ${statusDetails.bg} flex items-center gap-2 shadow-lg ${statusDetails.pulse || ''}`}>
+                <span className={`px-4 py-2 rounded-full text-sm font-semibold text-white ${statusDetails.bg} flex items-center gap-2 shadow-lg`}>
                   <StatusIcon className="w-4 h-4" />
                   {statusDetails.label}
                 </span>
@@ -273,6 +300,24 @@ const TicketDetailView = ({ ticketId, onBack }) => {
               <RefreshCw className={`w-5 h-5 text-gray-600 ${loading ? 'animate-spin' : ''}`} />
             </button>
           </div>
+
+          {/* Booking Info */}
+          {ticketData.bookingId && (
+            <div className="bg-purple-50 rounded-xl p-4 border border-purple-100 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-[#892580] rounded-lg flex items-center justify-center">
+                  <FileText className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Related Booking</p>
+                  <p className="font-bold text-black">{ticketData.bookingId.customBookingId}</p>
+                  <p className="text-sm text-gray-600">
+                    Status: {ticketData.bookingId.status} • Total: ₹{ticketData.bookingId.totalAmount}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Ticket Meta Info */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -352,7 +397,6 @@ const TicketDetailView = ({ ticketId, onBack }) => {
                 
                 return (
                   <div key={index} className={`flex gap-3 ${isAdmin ? 'flex-row-reverse' : ''}`}>
-                    
                     {/* Message Bubble */}
                     <div className={`flex-1 max-w-xs ${isAdmin ? 'ml-auto' : 'mr-auto'}`}>
                       <div className={`${isAdmin ? 'bg-[#892580] text-white' : 'bg-white border border-gray-200'} rounded-2xl p-4 shadow-md`}>
@@ -405,14 +449,6 @@ const TicketDetailView = ({ ticketId, onBack }) => {
                 </div>
                 
                 <div className="flex flex-col gap-2">
-                  <button
-                    type="button"
-                    className="p-3 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-xl transition-all"
-                    title="Attach file"
-                  >
-                    <Paperclip className="w-5 h-5" />
-                  </button>
-                  
                   <button
                     onClick={handleSubmitComment}
                     disabled={isSubmittingComment || !comment.trim()}
@@ -469,8 +505,4 @@ const TicketDetailView = ({ ticketId, onBack }) => {
       </div>
     </div>
   );
-};
-
-export default TicketDetailView;
-
-  
+}
